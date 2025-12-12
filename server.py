@@ -1,5 +1,6 @@
 import os
 import requests
+import uuid
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -108,6 +109,7 @@ async def get_geojson_data(request: BatchRequest):
                     ts_end = convert_to_iso_time(t_start_str, default_duration_sec=5)
 
                 props = {
+                    "id": str(uuid.uuid4()),
                     "label": event.get('label'),
                     "severity": event.get('severity', 'low'),
                     "status": event.get('approval', 'Unknown'),

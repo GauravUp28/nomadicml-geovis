@@ -31,11 +31,8 @@ function App() {
   const [filter, setFilter] = useState('all');
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  
-  // History State
   const [recentBatches, setRecentBatches] = useState([]);
 
-  // Timeline State
   const [currentTime, setCurrentTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
@@ -43,23 +40,20 @@ function App() {
   const [playbackSpeed, setPlaybackSpeed] = useState(2); 
   const [hasInteracted, setHasInteracted] = useState(false);
   
+  // Initialize as null so no event is selected by default
+  const [selectedId, setSelectedId] = useState(null);
+  
   const playInterval = useRef(null);
 
-  // Load History on Mount
   useEffect(() => {
     const saved = localStorage.getItem('nomadic_batch_history');
     if (saved) {
-      try {
-        setRecentBatches(JSON.parse(saved));
-      } catch (e) {
-        console.error("Failed to parse history", e);
-      }
+      try { setRecentBatches(JSON.parse(saved)); } catch (e) { console.error(e); }
     }
   }, []);
 
   const addToHistory = (id) => {
     if (!id) return;
-    // Add to front, remove duplicates, limit to 10
     const newHistory = [id, ...recentBatches.filter(item => item !== id)].slice(0, 10);
     setRecentBatches(newHistory);
     localStorage.setItem('nomadic_batch_history', JSON.stringify(newHistory));
@@ -69,6 +63,9 @@ function App() {
     if (!batchId) return alert("Please enter a Batch ID");
     setLoading(true);
     setHasInteracted(false);
+    
+    // 1. Reset selection immediately when starting a new search
+    setSelectedId(null); 
     
     const API_URL = 'http://localhost:8000'; 
     
@@ -84,8 +81,6 @@ function App() {
       const features = geoJson.features.sort((a,b) => a.properties.timestamp - b.properties.timestamp);
       if (features.length > 0) {
         const start = features[0].properties.timestamp;
-        
-        // End time logic: +2s buffer
         const lastEvent = features[features.length - 1];
         const end = (lastEvent.properties.timestamp_end || lastEvent.properties.timestamp) + 2000;
         
@@ -93,9 +88,10 @@ function App() {
         setEndTime(end);
         setCurrentTime(start);
         setData(geoJson);
-
-        // Success! Save to history
         addToHistory(batchId);
+        
+        // --- FIX: DO NOT SET selectedId HERE ---
+        // By leaving this out, the map loads without popping up any video.
       } else {
         alert("No events found.");
       }
@@ -106,10 +102,39 @@ function App() {
     }
   };
 
+  const handleEventClick = (id, time) => {
+    setHasInteracted(true);
+    setCurrentTime(time);
+    setSelectedId(id);
+  };
+
   const handleSeek = (t) => {
     setHasInteracted(true);
     setCurrentTime(t);
   };
+
+  useEffect(() => {
+    if (!data) return;
+    const activeEvents = data.features.filter(f => 
+      currentTime >= f.properties.timestamp && 
+      currentTime <= f.properties.timestamp_end
+    );
+
+    if (activeEvents.length > 0) {
+      const isSelectedStillActive = activeEvents.some(f => f.properties.id === selectedId);
+      
+      if (!isSelectedStillActive) {
+        // --- FIX: Only auto-select if user is actively PLAYING ---
+        // If simply scrubbing or loading, we do NOT auto-select.
+        if (isPlaying) {
+             setSelectedId(activeEvents[0].properties.id);
+        }
+      }
+    } else {
+      // If time passes and no event is active, clear the selection
+      setSelectedId(null);
+    }
+  }, [currentTime, data, isPlaying]); // Added isPlaying dependency
 
   useEffect(() => {
     if (isPlaying) {
@@ -133,43 +158,20 @@ function App() {
   return (
     <div className="flex flex-col h-screen bg-slate-100 overflow-hidden">
       
-      {/* Header */}
       <div className="bg-white shadow-sm p-4 z-[2000] relative shrink-0">
         <div className="max-w-full mx-4 flex flex-col md:flex-row justify-between items-center gap-4">
           <h1 className="text-xl font-bold text-slate-800">NomadicML <span className="text-blue-600">Geovisualizer</span></h1>
           <div className="flex gap-2 w-full max-w-2xl items-center">
-            
-            {/* History Dropdown */}
-            <details className="relative">
-              <summary className="list-none bg-white border border-slate-300 text-slate-600 px-3 py-2 rounded-lg cursor-pointer hover:bg-slate-50 text-sm font-medium select-none transition-colors" title="Recent Batches">
-                🕒
-              </summary>
+             <details className="relative">
+              <summary className="list-none bg-white border border-slate-300 text-slate-600 px-3 py-2 rounded-lg cursor-pointer hover:bg-slate-50 text-sm font-medium select-none transition-colors">🕒</summary>
               <div className="absolute top-full left-0 mt-2 w-72 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden z-[5000]">
-                <div className="bg-slate-50 px-3 py-2 text-xs font-bold text-slate-500 border-b border-slate-100 uppercase tracking-wider">
-                  Recent History
-                </div>
-                {recentBatches.length === 0 && (
-                  <div className="p-4 text-xs text-slate-400 text-center italic">No recent batches</div>
-                )}
                 {recentBatches.map(id => (
-                  <button
-                    key={id}
-                    onClick={() => { 
-                      setBatchId(id);
-                      // Close dropdown (hacky but works for <details>)
-                      document.querySelector('details[open]').removeAttribute('open');
-                    }}
-                    className="w-full text-left px-4 py-2.5 text-xs font-mono text-slate-600 hover:bg-blue-50 hover:text-blue-700 truncate border-b border-slate-50 last:border-0 transition-colors"
-                    title={id}
-                  >
-                    {id}
-                  </button>
+                  <button key={id} onClick={() => { setBatchId(id); document.querySelector('details[open]').removeAttribute('open'); }} className="w-full text-left px-4 py-2.5 text-xs font-mono text-slate-600 hover:bg-blue-50 hover:text-blue-700 truncate border-b border-slate-50 last:border-0">{id}</button>
                 ))}
               </div>
             </details>
-
             <input value={batchId} onChange={(e) => setBatchId(e.target.value)} className="flex-1 border border-slate-300 rounded-lg px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter Batch ID..." />
-            <select value={filter} onChange={(e) => setFilter(e.target.value)} className="border border-slate-300 rounded-lg px-4 py-2 bg-white text-sm outline-none cursor-pointer">
+            <select value={filter} onChange={(e) => setFilter(e.target.value)} className="border border-slate-300 rounded-lg px-4 py-2 bg-white text-sm outline-none">
               <option value="all">All Statuses</option>
               <option value="approved">Approved</option>
               <option value="pending">Pending</option>
@@ -181,7 +183,6 @@ function App() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 flex overflow-hidden relative">
         <div className="flex-1 relative h-full">
           <MapContainer center={[39.8283, -98.5795]} zoom={4} zoomControl={false} style={{ height: "100%", width: "100%" }}>
@@ -190,7 +191,16 @@ function App() {
                 <LayersControl.BaseLayer checked name="Light Mode"><TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution='CartoDB' /></LayersControl.BaseLayer>
                 <LayersControl.BaseLayer name="Satellite"><TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution='Esri' /></LayersControl.BaseLayer>
               </LayersControl>
-              {data && <MapLayer data={data} currentTime={currentTime} showAll={!hasInteracted} />}
+              
+              {data && (
+                <MapLayer 
+                  data={data} 
+                  currentTime={currentTime} 
+                  showAll={!hasInteracted} 
+                  selectedId={selectedId} 
+                />
+              )}
+              
               {data && <AutoFitBounds data={data} />}
           </MapContainer>
           {data && (
@@ -208,7 +218,12 @@ function App() {
         </div>
         {data && (
           <div className="w-[350px] shrink-0 h-full relative transition-all duration-300 ease-in-out">
-            <EventGrid events={eventList} currentTime={currentTime} onEventClick={handleSeek} />
+            <EventGrid 
+              events={eventList} 
+              currentTime={currentTime} 
+              selectedId={selectedId} 
+              onEventClick={handleEventClick} 
+            />
           </div>
         )}
       </div>
