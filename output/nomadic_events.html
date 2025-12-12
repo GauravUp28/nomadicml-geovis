@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f41b5199d1ff9a888a50a473bf811977 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_f41b5199d1ff9a888a50a473bf811977" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f41b5199d1ff9a888a50a473bf811977 = L.map(
+                "map_f41b5199d1ff9a888a50a473bf811977",
+                {
+                    center: [0.0, 0.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 1,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_da6a1f66a1ade3cd7fd4f31310371e8d = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_da6a1f66a1ade3cd7fd4f31310371e8d.addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            var tile_layer_b6cba8d0d34492ce8a90fbdef0260278 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_b6cba8d0d34492ce8a90fbdef0260278.addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            var marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var marker_a230f889a32125342f8e261dd0727371 = L.marker(
+                [40.1411, -82.9814],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_78a70bd9ab9a3802f964bc22d29ca8f5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b81a4ea03e27ea47ef8f6011f93bbcb3 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_4753ff23e66a4b9a5d67e638d507c171 = $(`<div id="html_4753ff23e66a4b9a5d67e638d507c171" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops in Traffic</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 00:31 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/3f8ff83f66b24b298fa5455023b0d9b1.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173337Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=6e0d0a94e416185a65547d264f65f7f4a5a8350b317ad1be36e52979058f90592b693ff6b74e05c0895fedcc30fcdb09576480585734c05f3b60407221546b5100ef2d316e8738891089f113ddaf3d40f2197c43118337687c82857dad770b8299659714fd0559937a94d4ca5c463ef2707c46059357da503a8d9f5c7b2e65dc23ed13a1ea51ef5c198a3dd37e781fe1cf65f8691cac7e14dca0b1b7df1acec5a59f4ed8822b26d24eb12c244ae106cf1f3b93d37aabdbe1b280e7200019af0f295945c380ed889c44e26af28fb9ae2532006e2b2fcc8e46da27992144087db6f1383a3ddbf44c4f4667421378a49981dac6e98b7f966de68430e0de66eeda24#t=31" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The camera vehicle, traveling at 3.4 mph in a line of traffic, begins to slow down at 00:31. It comes to a complete stop at 00:37, waiting at an intersection.             </div>         </div>         </div>`)[0];
+                popup_b81a4ea03e27ea47ef8f6011f93bbcb3.setContent(html_4753ff23e66a4b9a5d67e638d507c171);
+            
+        
+
+        marker_a230f889a32125342f8e261dd0727371.bindPopup(popup_b81a4ea03e27ea47ef8f6011f93bbcb3)
+        ;
+
+        
+    
+    
+            marker_a230f889a32125342f8e261dd0727371.bindTooltip(
+                `<div>
+                     Vehicle Stops in Traffic
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a230f889a32125342f8e261dd0727371.setIcon(icon_78a70bd9ab9a3802f964bc22d29ca8f5);
+            
+    
+            var marker_cf3d6a36ce1e5a0e03fa852f2379f56a = L.marker(
+                [40.141944, -82.970278],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_851de0f19781a4d124ca7366b63bc546 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d6443c591cd58f67b52784efb1ffac76 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_86b7172d6f84cb4b8c44609c0da3a88f = $(`<div id="html_86b7172d6f84cb4b8c44609c0da3a88f" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:43 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/3f8ff83f66b24b298fa5455023b0d9b1.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173337Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=6e0d0a94e416185a65547d264f65f7f4a5a8350b317ad1be36e52979058f90592b693ff6b74e05c0895fedcc30fcdb09576480585734c05f3b60407221546b5100ef2d316e8738891089f113ddaf3d40f2197c43118337687c82857dad770b8299659714fd0559937a94d4ca5c463ef2707c46059357da503a8d9f5c7b2e65dc23ed13a1ea51ef5c198a3dd37e781fe1cf65f8691cac7e14dca0b1b7df1acec5a59f4ed8822b26d24eb12c244ae106cf1f3b93d37aabdbe1b280e7200019af0f295945c380ed889c44e26af28fb9ae2532006e2b2fcc8e46da27992144087db6f1383a3ddbf44c4f4667421378a49981dac6e98b7f966de68430e0de66eeda24#t=103" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The camera vehicle approaches an intersection with a red traffic light and begins to decelerate at 01:43. The vehicle's speed, as indicated by the on-screen display, decreases from 30.8 mph until it comes to a complete stop at 0.0 mph at 02:00, waiting in traffic.             </div>         </div>         </div>`)[0];
+                popup_d6443c591cd58f67b52784efb1ffac76.setContent(html_86b7172d6f84cb4b8c44609c0da3a88f);
+            
+        
+
+        marker_cf3d6a36ce1e5a0e03fa852f2379f56a.bindPopup(popup_d6443c591cd58f67b52784efb1ffac76)
+        ;
+
+        
+    
+    
+            marker_cf3d6a36ce1e5a0e03fa852f2379f56a.bindTooltip(
+                `<div>
+                     Vehicle Stops (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cf3d6a36ce1e5a0e03fa852f2379f56a.setIcon(icon_851de0f19781a4d124ca7366b63bc546);
+            
+    
+            var marker_ed8c8cd8b02389d23e060267bb6e7ee4 = L.marker(
+                [40.141944, -82.969722],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_503be1077c73e61179c79966e9b0e1a6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a570a17e9578e7cbf12850f3eb9f9bed = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_680dd99a082aeaf64cc902b09e2a6578 = $(`<div id="html_680dd99a082aeaf64cc902b09e2a6578" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:43 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The camera vehicle approaches an intersection with a red traffic light and begins to decelerate at 01:43. The vehicle's speed, as indicated by the on-screen display, decreases from 30.8 mph until it comes to a complete stop at 0.0 mph at 02:00, waiting in traffic.             </div>         </div>         </div>`)[0];
+                popup_a570a17e9578e7cbf12850f3eb9f9bed.setContent(html_680dd99a082aeaf64cc902b09e2a6578);
+            
+        
+
+        marker_ed8c8cd8b02389d23e060267bb6e7ee4.bindPopup(popup_a570a17e9578e7cbf12850f3eb9f9bed)
+        ;
+
+        
+    
+    
+            marker_ed8c8cd8b02389d23e060267bb6e7ee4.bindTooltip(
+                `<div>
+                     Vehicle Stops (End)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ed8c8cd8b02389d23e060267bb6e7ee4.setIcon(icon_503be1077c73e61179c79966e9b0e1a6);
+            
+    
+            var marker_313d665fe1faf0886f0034f8440454ea = L.marker(
+                [39.9944, -83.0019],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_268a9c86f1591caca6ac7073b38512fa = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e096dfc5f5ead8b387968fe437e58eec = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_aaa20e77b339b6b1af8f5d2271c9090a = $(`<div id="html_aaa20e77b339b6b1af8f5d2271c9090a" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 00:00 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/748155c2e9774486a6e31f51b00b9301.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173337Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=81e2c30894bf792bca4657ce7c1a0958fb373556b51a1a2f9301ab78255097515506e58f680eb1feae10ab725e75cae8db21d076702dc7f19fc87aed0a4fd28f803c6db512ec4a5362cfc5573ee4932eea01b68a361e88c39bf157a5751de189d2df84f468cc9fa16907cd79a027aa55a825d9fb792be95c84b808fd090643d01f769567219643b2ddfbfddffd67f9cdbe078541cba16c96498eed79969d7eb97d0364216f72f2c8c245dde2c0cddc67054999971cd21a00d70005a7ce6f4b2d074d50dd2d742de03098d607865e21ab3b6b1c9452d6777fc0b6c3e3a3765ccb98efd9fcd9dd728e736f5cb6d3dbedeba05d763ec8a2b31b47a204bbe8fc9a50#t=0" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 From 00:00 to 00:04, the camera-equipped vehicle slows from 1.6 mph to a complete stop. The stop is made behind a red SUV at an intersection with a red traffic light.             </div>         </div>         </div>`)[0];
+                popup_e096dfc5f5ead8b387968fe437e58eec.setContent(html_aaa20e77b339b6b1af8f5d2271c9090a);
+            
+        
+
+        marker_313d665fe1faf0886f0034f8440454ea.bindPopup(popup_e096dfc5f5ead8b387968fe437e58eec)
+        ;
+
+        
+    
+    
+            marker_313d665fe1faf0886f0034f8440454ea.bindTooltip(
+                `<div>
+                     Vehicle Stops
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_313d665fe1faf0886f0034f8440454ea.setIcon(icon_268a9c86f1591caca6ac7073b38512fa);
+            
+    
+            var marker_80e06a30b588690d1411d2cb945e8ef6 = L.marker(
+                [39.983333, -83.001944],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_bb779fc187c165c5d6e336ce56bb2402 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b342d0e987bbcc5e0d06ceff6d4284e3 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_6165e80f550eabb1ed57f49da3202c64 = $(`<div id="html_6165e80f550eabb1ed57f49da3202c64" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stop</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 00:30 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/748155c2e9774486a6e31f51b00b9301.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173337Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=81e2c30894bf792bca4657ce7c1a0958fb373556b51a1a2f9301ab78255097515506e58f680eb1feae10ab725e75cae8db21d076702dc7f19fc87aed0a4fd28f803c6db512ec4a5362cfc5573ee4932eea01b68a361e88c39bf157a5751de189d2df84f468cc9fa16907cd79a027aa55a825d9fb792be95c84b808fd090643d01f769567219643b2ddfbfddffd67f9cdbe078541cba16c96498eed79969d7eb97d0364216f72f2c8c245dde2c0cddc67054999971cd21a00d70005a7ce6f4b2d074d50dd2d742de03098d607865e21ab3b6b1c9452d6777fc0b6c3e3a3765ccb98efd9fcd9dd728e736f5cb6d3dbedeba05d763ec8a2b31b47a204bbe8fc9a50#t=30" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The video begins at 00:30 with the ego vehicle already at a complete stop, as indicated by the 0.0 mph reading on the on-screen display. The vehicle is positioned at an intersection with a red traffic light. At 00:32, the traffic light turns green, and the vehicle begins to accelerate, ending the stop.             </div>         </div>         </div>`)[0];
+                popup_b342d0e987bbcc5e0d06ceff6d4284e3.setContent(html_6165e80f550eabb1ed57f49da3202c64);
+            
+        
+
+        marker_80e06a30b588690d1411d2cb945e8ef6.bindPopup(popup_b342d0e987bbcc5e0d06ceff6d4284e3)
+        ;
+
+        
+    
+    
+            marker_80e06a30b588690d1411d2cb945e8ef6.bindTooltip(
+                `<div>
+                     Vehicle Stop
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_80e06a30b588690d1411d2cb945e8ef6.setIcon(icon_bb779fc187c165c5d6e336ce56bb2402);
+            
+    
+            var marker_8a243a34a48baed2a1e890d7541d09ef = L.marker(
+                [34.735556, -86.575278],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_64d8855e08c0417b5f062c86a950dd7a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a8fecd3dc641a9f3418d06e70496e142 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_e33ddbc3e6d0cf670ef3ce2e00bc9651 = $(`<div id="html_e33ddbc3e6d0cf670ef3ce2e00bc9651" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle comes to a complete stop</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 00:15 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/803d60b96d19460eb35fa8fef6de8510.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173338Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=609107a3ca8601cae436ead549be92fc431c4dbeb9df94fc1387108e5324d190ab484c226a57deb9d16b35bc3040bfc54d101320d133052b8ec9c5c6dce5e44fedc668f1ebd1b5f6583839b321fdd67e0550cfd2e1c1d1334271eef754a9722a8f4c48ebb7b9c83a16e97292bd6c4d53d3ecb229b71539d7cb64b084d7a9894f251406977e3b39f37fc555924b5a6687ae5601d6885f98d4d2f02f4d3887b3b4054f49f64787bb1fdcbe8ce931f037015498a508199186c663983dd645998e5492669b2c4eb8f63f4a5447463d5e2a005bcaafa17ca777009cf4ed4595872c2f55688991e72eeebf813c7de23671bd9a2d12319cd2a13580fd2e0ef0584fdde4#t=15" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The camera vehicle approaches an intersection with a stop sign and begins to slow down at 00:15. The vehicle comes to a complete stop from approximately 00:19 to 00:23, with the speed dropping to 0.6 mph. During the stop, several vehicles are observed passing through the intersection. The camera vehicle begins to accelerate and proceed through the intersection at 00:24.             </div>         </div>         </div>`)[0];
+                popup_a8fecd3dc641a9f3418d06e70496e142.setContent(html_e33ddbc3e6d0cf670ef3ce2e00bc9651);
+            
+        
+
+        marker_8a243a34a48baed2a1e890d7541d09ef.bindPopup(popup_a8fecd3dc641a9f3418d06e70496e142)
+        ;
+
+        
+    
+    
+            marker_8a243a34a48baed2a1e890d7541d09ef.bindTooltip(
+                `<div>
+                     Vehicle comes to a complete stop
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8a243a34a48baed2a1e890d7541d09ef.setIcon(icon_64d8855e08c0417b5f062c86a950dd7a);
+            
+    
+            var marker_42a0297d27d66653f949b91bb8e01e7b = L.marker(
+                [34.73611, -86.57611],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_b55f7c70458f8b533bf232790f172d0c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_192b727dc26d21258f01842cf282c847 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_2f90559618ebf9aec1944ebb1d1f465f = $(`<div id="html_2f90559618ebf9aec1944ebb1d1f465f" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 00:37 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/803d60b96d19460eb35fa8fef6de8510.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173338Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=609107a3ca8601cae436ead549be92fc431c4dbeb9df94fc1387108e5324d190ab484c226a57deb9d16b35bc3040bfc54d101320d133052b8ec9c5c6dce5e44fedc668f1ebd1b5f6583839b321fdd67e0550cfd2e1c1d1334271eef754a9722a8f4c48ebb7b9c83a16e97292bd6c4d53d3ecb229b71539d7cb64b084d7a9894f251406977e3b39f37fc555924b5a6687ae5601d6885f98d4d2f02f4d3887b3b4054f49f64787bb1fdcbe8ce931f037015498a508199186c663983dd645998e5492669b2c4eb8f63f4a5447463d5e2a005bcaafa17ca777009cf4ed4595872c2f55688991e72eeebf813c7de23671bd9a2d12319cd2a13580fd2e0ef0584fdde4#t=37" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The vehicle begins to slow down at 00:37 as it approaches an intersection with a red traffic light. The vehicle comes to a near-complete stop from 00:49 to 00:50. The traffic light turns green at 00:51, and the vehicle begins to accelerate and proceeds through the intersection.             </div>         </div>         </div>`)[0];
+                popup_192b727dc26d21258f01842cf282c847.setContent(html_2f90559618ebf9aec1944ebb1d1f465f);
+            
+        
+
+        marker_42a0297d27d66653f949b91bb8e01e7b.bindPopup(popup_192b727dc26d21258f01842cf282c847)
+        ;
+
+        
+    
+    
+            marker_42a0297d27d66653f949b91bb8e01e7b.bindTooltip(
+                `<div>
+                     Vehicle Stops (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_42a0297d27d66653f949b91bb8e01e7b.setIcon(icon_b55f7c70458f8b533bf232790f172d0c);
+            
+    
+            var marker_5f554618c12822e6e1233aa0b59ef054 = L.marker(
+                [34.73639, -86.57611],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_7b324c33d10ea491ab6210b8b92cd89f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7d1abea9a7f3c8f1a1a1ccb8e34216fd = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_275e9b8ae804a22467fab04e70ff7404 = $(`<div id="html_275e9b8ae804a22467fab04e70ff7404" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 00:37 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The vehicle begins to slow down at 00:37 as it approaches an intersection with a red traffic light. The vehicle comes to a near-complete stop from 00:49 to 00:50. The traffic light turns green at 00:51, and the vehicle begins to accelerate and proceeds through the intersection.             </div>         </div>         </div>`)[0];
+                popup_7d1abea9a7f3c8f1a1a1ccb8e34216fd.setContent(html_275e9b8ae804a22467fab04e70ff7404);
+            
+        
+
+        marker_5f554618c12822e6e1233aa0b59ef054.bindPopup(popup_7d1abea9a7f3c8f1a1a1ccb8e34216fd)
+        ;
+
+        
+    
+    
+            marker_5f554618c12822e6e1233aa0b59ef054.bindTooltip(
+                `<div>
+                     Vehicle Stops (End)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5f554618c12822e6e1233aa0b59ef054.setIcon(icon_7b324c33d10ea491ab6210b8b92cd89f);
+            
+    
+            var marker_782689c151dc98ae60da517a8cac2e82 = L.marker(
+                [34.73555, -86.57777],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_8eb7dffdf91d6ff3a7a979c8019738bd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c66739c1783e46be37ec2c185dcd10c7 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_8af1de4085ec5455ccb590387e102334 = $(`<div id="html_8af1de4085ec5455ccb590387e102334" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stop</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:12 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/803d60b96d19460eb35fa8fef6de8510.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173338Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=609107a3ca8601cae436ead549be92fc431c4dbeb9df94fc1387108e5324d190ab484c226a57deb9d16b35bc3040bfc54d101320d133052b8ec9c5c6dce5e44fedc668f1ebd1b5f6583839b321fdd67e0550cfd2e1c1d1334271eef754a9722a8f4c48ebb7b9c83a16e97292bd6c4d53d3ecb229b71539d7cb64b084d7a9894f251406977e3b39f37fc555924b5a6687ae5601d6885f98d4d2f02f4d3887b3b4054f49f64787bb1fdcbe8ce931f037015498a508199186c663983dd645998e5492669b2c4eb8f63f4a5447463d5e2a005bcaafa17ca777009cf4ed4595872c2f55688991e72eeebf813c7de23671bd9a2d12319cd2a13580fd2e0ef0584fdde4#t=72" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The ego vehicle begins to slow down at 01:13 as it approaches an intersection with a stop sign. The vehicle's speed decreases from 16.5 mph until it comes to a complete stop at 01:19. A white sedan crosses the intersection from the left while the ego vehicle is stopped. The ego vehicle remains stationary until 01:20 before accelerating and proceeding through the intersection.             </div>         </div>         </div>`)[0];
+                popup_c66739c1783e46be37ec2c185dcd10c7.setContent(html_8af1de4085ec5455ccb590387e102334);
+            
+        
+
+        marker_782689c151dc98ae60da517a8cac2e82.bindPopup(popup_c66739c1783e46be37ec2c185dcd10c7)
+        ;
+
+        
+    
+    
+            marker_782689c151dc98ae60da517a8cac2e82.bindTooltip(
+                `<div>
+                     Vehicle Stop (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_782689c151dc98ae60da517a8cac2e82.setIcon(icon_8eb7dffdf91d6ff3a7a979c8019738bd);
+            
+    
+            var marker_ed6f94245cb543793a9e9b3969c6420b = L.marker(
+                [34.73555, -86.57805],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_06f380e2dc87e5fe3fdb91795411ba3d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_46b49fc4efbd1881f3c99aefa1866f90 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_2702cbe44c696008ece9c72cdcfe6703 = $(`<div id="html_2702cbe44c696008ece9c72cdcfe6703" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stop</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:12 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The ego vehicle begins to slow down at 01:13 as it approaches an intersection with a stop sign. The vehicle's speed decreases from 16.5 mph until it comes to a complete stop at 01:19. A white sedan crosses the intersection from the left while the ego vehicle is stopped. The ego vehicle remains stationary until 01:20 before accelerating and proceeding through the intersection.             </div>         </div>         </div>`)[0];
+                popup_46b49fc4efbd1881f3c99aefa1866f90.setContent(html_2702cbe44c696008ece9c72cdcfe6703);
+            
+        
+
+        marker_ed6f94245cb543793a9e9b3969c6420b.bindPopup(popup_46b49fc4efbd1881f3c99aefa1866f90)
+        ;
+
+        
+    
+    
+            marker_ed6f94245cb543793a9e9b3969c6420b.bindTooltip(
+                `<div>
+                     Vehicle Stop (End)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ed6f94245cb543793a9e9b3969c6420b.setIcon(icon_06f380e2dc87e5fe3fdb91795411ba3d);
+            
+    
+            var marker_e4230b1b5ecb8498995f941b4278d49e = L.marker(
+                [34.735, -86.579167],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_723c7f8d23e07ec680e4067a10a4c90e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f5bb656b088c3a23c969636578c35ff8 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_1c0062095ab6e33b8436d876c4754617 = $(`<div id="html_1c0062095ab6e33b8436d876c4754617" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stop</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:36 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/803d60b96d19460eb35fa8fef6de8510.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173338Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=609107a3ca8601cae436ead549be92fc431c4dbeb9df94fc1387108e5324d190ab484c226a57deb9d16b35bc3040bfc54d101320d133052b8ec9c5c6dce5e44fedc668f1ebd1b5f6583839b321fdd67e0550cfd2e1c1d1334271eef754a9722a8f4c48ebb7b9c83a16e97292bd6c4d53d3ecb229b71539d7cb64b084d7a9894f251406977e3b39f37fc555924b5a6687ae5601d6885f98d4d2f02f4d3887b3b4054f49f64787bb1fdcbe8ce931f037015498a508199186c663983dd645998e5492669b2c4eb8f63f4a5447463d5e2a005bcaafa17ca777009cf4ed4595872c2f55688991e72eeebf813c7de23671bd9a2d12319cd2a13580fd2e0ef0584fdde4#t=96" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The vehicle begins to slow down at 01:37 as it approaches an all-way stop intersection. The vehicle comes to a complete stop at 01:43 and remains stopped until it begins to accelerate again at 01:45.             </div>         </div>         </div>`)[0];
+                popup_f5bb656b088c3a23c969636578c35ff8.setContent(html_1c0062095ab6e33b8436d876c4754617);
+            
+        
+
+        marker_e4230b1b5ecb8498995f941b4278d49e.bindPopup(popup_f5bb656b088c3a23c969636578c35ff8)
+        ;
+
+        
+    
+    
+            marker_e4230b1b5ecb8498995f941b4278d49e.bindTooltip(
+                `<div>
+                     Vehicle Stop (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e4230b1b5ecb8498995f941b4278d49e.setIcon(icon_723c7f8d23e07ec680e4067a10a4c90e);
+            
+    
+            var marker_1b9bbe86668b2c55e2a4c70b4ea2e20c = L.marker(
+                [34.734722, -86.579444],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_ceb6b31fea00dbc54bbe902011c33a5b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f477bacfc0847349fb0b050b42fcb8cc = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_a34c4ac6599d469b5ba962179a6bccaf = $(`<div id="html_a34c4ac6599d469b5ba962179a6bccaf" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stop</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:36 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The vehicle begins to slow down at 01:37 as it approaches an all-way stop intersection. The vehicle comes to a complete stop at 01:43 and remains stopped until it begins to accelerate again at 01:45.             </div>         </div>         </div>`)[0];
+                popup_f477bacfc0847349fb0b050b42fcb8cc.setContent(html_a34c4ac6599d469b5ba962179a6bccaf);
+            
+        
+
+        marker_1b9bbe86668b2c55e2a4c70b4ea2e20c.bindPopup(popup_f477bacfc0847349fb0b050b42fcb8cc)
+        ;
+
+        
+    
+    
+            marker_1b9bbe86668b2c55e2a4c70b4ea2e20c.bindTooltip(
+                `<div>
+                     Vehicle Stop (End)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1b9bbe86668b2c55e2a4c70b4ea2e20c.setIcon(icon_ceb6b31fea00dbc54bbe902011c33a5b);
+            
+    
+            var marker_3a7d8773868c7aa949650e8fb6aed353 = L.marker(
+                [34.728889, -86.583611],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_e299f2ceb00515d23ad984784fc42aa9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_54489324e01abd74df2c9a334526b713 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_2102da65030b990fef3b5626a79ddf92 = $(`<div id="html_2102da65030b990fef3b5626a79ddf92" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:24 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/9f8b89ccedbd4399b50b59e9cc16a5eb.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173338Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=479a4d59dc8a32a96c4ce5363e1865b358a1e7282fdb8f35bf43da75c10d927f8a43c76e1b0d254c574f34f00b23c9802c2b75e69ef407c19235946f900a45b56ac5f4975dff310330cda1c77ecb0eb77284a5bed9b5a2c581f2b71d3b28c8f59d0fdd3e19b851a38f612fff7c6d944900277bb8f4cb99064824af75b444870117d253a010be29799948da35d88616644f66bb7f5ab45a4a4621ac4a51078ef6ca582cfd6a0935a23d0e29d7e89afbb38dbc04a050cf0db6f0ff16f4733f481062a624d58a1aaf57ec0d4be63ff5847858bc9bac4f76b46daa91ecc65f5ba87c6b23ecd5fccbf98b2af3bd1afb98b763a7f2ff8aa199256741e4b92fb22f4552#t=84" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The vehicle begins to slow down at 01:25 as it approaches a red traffic light at an intersection. It comes to a complete stop at 01:29 and remains stationary until the end of the clip at 01:30.             </div>         </div>         </div>`)[0];
+                popup_54489324e01abd74df2c9a334526b713.setContent(html_2102da65030b990fef3b5626a79ddf92);
+            
+        
+
+        marker_3a7d8773868c7aa949650e8fb6aed353.bindPopup(popup_54489324e01abd74df2c9a334526b713)
+        ;
+
+        
+    
+    
+            marker_3a7d8773868c7aa949650e8fb6aed353.bindTooltip(
+                `<div>
+                     Vehicle Stops (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3a7d8773868c7aa949650e8fb6aed353.setIcon(icon_e299f2ceb00515d23ad984784fc42aa9);
+            
+    
+            var marker_27ee6c978621c52a726134b329535524 = L.marker(
+                [34.729167, -86.583611],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_747fcd3857e55e5ee756dcdbfe7f1c2a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_dc7f98afd3c348fe5484f45d00eec472 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_201b8889cf86ad93d5cbcaddf59ea371 = $(`<div id="html_201b8889cf86ad93d5cbcaddf59ea371" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:24 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The vehicle begins to slow down at 01:25 as it approaches a red traffic light at an intersection. It comes to a complete stop at 01:29 and remains stationary until the end of the clip at 01:30.             </div>         </div>         </div>`)[0];
+                popup_dc7f98afd3c348fe5484f45d00eec472.setContent(html_201b8889cf86ad93d5cbcaddf59ea371);
+            
+        
+
+        marker_27ee6c978621c52a726134b329535524.bindPopup(popup_dc7f98afd3c348fe5484f45d00eec472)
+        ;
+
+        
+    
+    
+            marker_27ee6c978621c52a726134b329535524.bindTooltip(
+                `<div>
+                     Vehicle Stops (End)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_27ee6c978621c52a726134b329535524.setIcon(icon_747fcd3857e55e5ee756dcdbfe7f1c2a);
+            
+    
+            var marker_7c306097e3e1dfa02cd25c4832a29ac6 = L.marker(
+                [34.729167, -86.583611],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_4dad063f55af49fce08fdbca3f51cb9f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_476c441d87110530bcb842d9c4269aa4 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_bd8fa0f18ed75204e0cb665840a96ba0 = $(`<div id="html_bd8fa0f18ed75204e0cb665840a96ba0" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops at Red Light</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:30 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/9f8b89ccedbd4399b50b59e9cc16a5eb.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173338Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=479a4d59dc8a32a96c4ce5363e1865b358a1e7282fdb8f35bf43da75c10d927f8a43c76e1b0d254c574f34f00b23c9802c2b75e69ef407c19235946f900a45b56ac5f4975dff310330cda1c77ecb0eb77284a5bed9b5a2c581f2b71d3b28c8f59d0fdd3e19b851a38f612fff7c6d944900277bb8f4cb99064824af75b444870117d253a010be29799948da35d88616644f66bb7f5ab45a4a4621ac4a51078ef6ca582cfd6a0935a23d0e29d7e89afbb38dbc04a050cf0db6f0ff16f4733f481062a624d58a1aaf57ec0d4be63ff5847858bc9bac4f76b46daa91ecc65f5ba87c6b23ecd5fccbf98b2af3bd1afb98b763a7f2ff8aa199256741e4b92fb22f4552#t=90" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The ego vehicle is observed stopped at a red light at an intersection from 01:31 to 01:40. The traffic light turns green at 01:39, and the vehicle begins to proceed through the intersection.             </div>         </div>         </div>`)[0];
+                popup_476c441d87110530bcb842d9c4269aa4.setContent(html_bd8fa0f18ed75204e0cb665840a96ba0);
+            
+        
+
+        marker_7c306097e3e1dfa02cd25c4832a29ac6.bindPopup(popup_476c441d87110530bcb842d9c4269aa4)
+        ;
+
+        
+    
+    
+            marker_7c306097e3e1dfa02cd25c4832a29ac6.bindTooltip(
+                `<div>
+                     Vehicle Stops at Red Light
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7c306097e3e1dfa02cd25c4832a29ac6.setIcon(icon_4dad063f55af49fce08fdbca3f51cb9f);
+            
+    
+            var marker_089a3a55a5299e0e8ed4393df54e5152 = L.marker(
+                [34.729167, -86.582778],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_8f8abae74d88be4dfd719714d0d4e828 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c0fa0bef0ef478e76c3fcc0b7ff600bb = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_9cb115bf72f66cd65a6c217fb8ff28a2 = $(`<div id="html_9cb115bf72f66cd65a6c217fb8ff28a2" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops at Stop Sign</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:52 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/9f8b89ccedbd4399b50b59e9cc16a5eb.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173338Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=479a4d59dc8a32a96c4ce5363e1865b358a1e7282fdb8f35bf43da75c10d927f8a43c76e1b0d254c574f34f00b23c9802c2b75e69ef407c19235946f900a45b56ac5f4975dff310330cda1c77ecb0eb77284a5bed9b5a2c581f2b71d3b28c8f59d0fdd3e19b851a38f612fff7c6d944900277bb8f4cb99064824af75b444870117d253a010be29799948da35d88616644f66bb7f5ab45a4a4621ac4a51078ef6ca582cfd6a0935a23d0e29d7e89afbb38dbc04a050cf0db6f0ff16f4733f481062a624d58a1aaf57ec0d4be63ff5847858bc9bac4f76b46daa91ecc65f5ba87c6b23ecd5fccbf98b2af3bd1afb98b763a7f2ff8aa199256741e4b92fb22f4552#t=112" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The ego vehicle is seen slowing down and coming to a stop for a stop sign at an all-way stop intersection. The vehicle begins to slow down at 01:53 and comes to a near-complete stop by 02:00.             </div>         </div>         </div>`)[0];
+                popup_c0fa0bef0ef478e76c3fcc0b7ff600bb.setContent(html_9cb115bf72f66cd65a6c217fb8ff28a2);
+            
+        
+
+        marker_089a3a55a5299e0e8ed4393df54e5152.bindPopup(popup_c0fa0bef0ef478e76c3fcc0b7ff600bb)
+        ;
+
+        
+    
+    
+            marker_089a3a55a5299e0e8ed4393df54e5152.bindTooltip(
+                `<div>
+                     Vehicle Stops at Stop Sign (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_089a3a55a5299e0e8ed4393df54e5152.setIcon(icon_8f8abae74d88be4dfd719714d0d4e828);
+            
+    
+            var marker_45e6960cb1bf4b238ec71a42e5ac11c2 = L.marker(
+                [34.729167, -86.5825],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_92d9c98b51133b956e9ca51dedd3f6e5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8e93773723d732aa489c023b867d0c16 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_e39319c4a329e6cacdd979fee6274125 = $(`<div id="html_e39319c4a329e6cacdd979fee6274125" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops at Stop Sign</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:52 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The ego vehicle is seen slowing down and coming to a stop for a stop sign at an all-way stop intersection. The vehicle begins to slow down at 01:53 and comes to a near-complete stop by 02:00.             </div>         </div>         </div>`)[0];
+                popup_8e93773723d732aa489c023b867d0c16.setContent(html_e39319c4a329e6cacdd979fee6274125);
+            
+        
+
+        marker_45e6960cb1bf4b238ec71a42e5ac11c2.bindPopup(popup_8e93773723d732aa489c023b867d0c16)
+        ;
+
+        
+    
+    
+            marker_45e6960cb1bf4b238ec71a42e5ac11c2.bindTooltip(
+                `<div>
+                     Vehicle Stops at Stop Sign (End)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_45e6960cb1bf4b238ec71a42e5ac11c2.setIcon(icon_92d9c98b51133b956e9ca51dedd3f6e5);
+            
+    
+            var marker_a6d040428e0096aed8296daa7a965126 = L.marker(
+                [34.735556, -86.565278],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_495e98273a635faf3519d7a3bb6b5662 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7d2c96909fdbee27e794a4ea54d0fe34 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_e8f6b91a14312117585ed9aafc3f3a62 = $(`<div id="html_e8f6b91a14312117585ed9aafc3f3a62" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle stops at stop sign</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 00:22 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/b4dafb7358b947e99fce375f519adab6.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173339Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=278ec1a0aae884eb06d1985c2924ceab036f31c415e2edc9f37b74c60ba3e718086a93a82b0bdca33a210b2b728e0956e13362dfc75bd17025484f1449b3d82264ddd32c306eabf6e078698a2611eaf40c6333e07984265530f67a7b0f7736a3d47d44bbd033121513c9289ae0f074578e33883311f1fb391655a84e56c2f570081853b68eed339873a1970f58d9ac49280500b3a96dcd8793fdea1c5a779fe6cdc5da5db3b2b0d6ab73cdab4c3336f4b2958d596db1c20ad6cbe8cf654ffaa03094976b72f33d4f1d6538d26a7f04f233b7d4fc9c4d4479891b547bfa05a457e9fe176ff0290c862a9abb330b601ca2953548d8422dc3f74d03fa4a3b444b9d#t=22" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The vehicle begins to slow down at 00:22 as it approaches an intersection with a stop sign. The vehicle comes to a near-complete stop from 00:25 to 00:27 before accelerating and proceeding through the intersection at 00:28.             </div>         </div>         </div>`)[0];
+                popup_7d2c96909fdbee27e794a4ea54d0fe34.setContent(html_e8f6b91a14312117585ed9aafc3f3a62);
+            
+        
+
+        marker_a6d040428e0096aed8296daa7a965126.bindPopup(popup_7d2c96909fdbee27e794a4ea54d0fe34)
+        ;
+
+        
+    
+    
+            marker_a6d040428e0096aed8296daa7a965126.bindTooltip(
+                `<div>
+                     Vehicle stops at stop sign (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a6d040428e0096aed8296daa7a965126.setIcon(icon_495e98273a635faf3519d7a3bb6b5662);
+            
+    
+            var marker_5b2ae07a4e9609dd02151012b6277a41 = L.marker(
+                [34.735556, -86.565556],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_ba0073d8103581876fe0978b8da01238 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_45766fc7519ee1179699d937f64088d0 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_743149d33ec5cef7c935ec55b973ea79 = $(`<div id="html_743149d33ec5cef7c935ec55b973ea79" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle stops at stop sign</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 00:22 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The vehicle begins to slow down at 00:22 as it approaches an intersection with a stop sign. The vehicle comes to a near-complete stop from 00:25 to 00:27 before accelerating and proceeding through the intersection at 00:28.             </div>         </div>         </div>`)[0];
+                popup_45766fc7519ee1179699d937f64088d0.setContent(html_743149d33ec5cef7c935ec55b973ea79);
+            
+        
+
+        marker_5b2ae07a4e9609dd02151012b6277a41.bindPopup(popup_45766fc7519ee1179699d937f64088d0)
+        ;
+
+        
+    
+    
+            marker_5b2ae07a4e9609dd02151012b6277a41.bindTooltip(
+                `<div>
+                     Vehicle stops at stop sign (End)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5b2ae07a4e9609dd02151012b6277a41.setIcon(icon_ba0073d8103581876fe0978b8da01238);
+            
+    
+            var marker_7bd568fd36070b5603dec06133f57224 = L.marker(
+                [40.009167, -83.009167],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_1c326b89d7448b44a6903706b8ae52e6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cea780dcb0e5ce6ef4ca6f9758ffa74c = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_299b250acce18b5de7478d39bb329b18 = $(`<div id="html_299b250acce18b5de7478d39bb329b18" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:41 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="margin-top:10px; margin-bottom:10px;">                 <video width="100%" height="auto" controls style="border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.2);">                     <source src="https://storage.googleapis.com/videolm-bc319.firebasestorage.app/videos/d55e12770eb744a09b0366fadf185b4e.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=firebase-adminsdk-fbsvc%40videolm-bc319.iam.gserviceaccount.com%2F20251212%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251212T173339Z&X-Goog-Expires=899&X-Goog-SignedHeaders=host&X-Goog-Signature=61dec03cb1d4cc7c33fed0f97a6646d376618331492acf3e58d18016c383786c485fbe2f1275c1c684ddf385253ac9131fd8ae140eef89fe22fb74db4fc2f57a1b0613d68619d4b000be077ae9702d16d8949a100c9e8a26c9225372fb7297b466d55735716f192c2451c8fff81ed4d9dd00943935abf058a5c2a13474748618277db38c71d169414e07ff36d2cbf4fc6cbed409f242974144cf74bdc537bc549348108821d4c7a30488ae1f042c90eb3da9cfb9eba18d1fc5a7e9e682640114fcb7f6ae5f55d06d0fb09085c9922e8e727318f21452334c724fbc7cb8e046c83d1fdda9e7a3dba3df28482fb54970905200ce43c83bc52e5e37a80239ec7e50#t=101" type="video/mp4">                     Your browser does not support the video tag.                 </video>             </div>                          <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The recording vehicle begins to slow down at 01:42 as it approaches an intersection with a red traffic light. The vehicle's speed decreases from 11.4 mph until it comes to a complete stop at 01:49. A cyclist is observed crossing the intersection in front of the stopped vehicle from 01:48 to 01:50. The vehicle remains stationary for the rest of the video.             </div>         </div>         </div>`)[0];
+                popup_cea780dcb0e5ce6ef4ca6f9758ffa74c.setContent(html_299b250acce18b5de7478d39bb329b18);
+            
+        
+
+        marker_7bd568fd36070b5603dec06133f57224.bindPopup(popup_cea780dcb0e5ce6ef4ca6f9758ffa74c)
+        ;
+
+        
+    
+    
+            marker_7bd568fd36070b5603dec06133f57224.bindTooltip(
+                `<div>
+                     Vehicle Stops (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7bd568fd36070b5603dec06133f57224.setIcon(icon_1c326b89d7448b44a6903706b8ae52e6);
+            
+    
+            var marker_88d0a89132e55e07c529193a046bbfc3 = L.marker(
+                [40.006111, -83.009167],
+                {
+}
+            ).addTo(marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c);
+        
+    
+            var icon_e418483d6491c7f01eb1c6853c251709 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "gray",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8f1b814a2c0e50efb652bce2397cb6bc = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_0ff2836cde40f366248e65343d5f8f32 = $(`<div id="html_0ff2836cde40f366248e65343d5f8f32" style="width: 100.0%; height: 100.0%;">         <div style="width:340px; font-family:sans-serif;">             <h4 style="margin-bottom:5px;">Vehicle Stops</h4>             <div style="font-size:12px; color:#666; margin-bottom:10px;">                 <b>Time:</b> 01:41 &bull;                  <b>Severity:</b> <span style="color:blue; font-weight:bold;">LOW</span>             </div>                      <div style="background:#f9f9f9; padding:8px; border-radius:4px; font-size:12px; border-left: 3px solid blue;">                 The recording vehicle begins to slow down at 01:42 as it approaches an intersection with a red traffic light. The vehicle's speed decreases from 11.4 mph until it comes to a complete stop at 01:49. A cyclist is observed crossing the intersection in front of the stopped vehicle from 01:48 to 01:50. The vehicle remains stationary for the rest of the video.             </div>         </div>         </div>`)[0];
+                popup_8f1b814a2c0e50efb652bce2397cb6bc.setContent(html_0ff2836cde40f366248e65343d5f8f32);
+            
+        
+
+        marker_88d0a89132e55e07c529193a046bbfc3.bindPopup(popup_8f1b814a2c0e50efb652bce2397cb6bc)
+        ;
+
+        
+    
+    
+            marker_88d0a89132e55e07c529193a046bbfc3.bindTooltip(
+                `<div>
+                     Vehicle Stops (End)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_88d0a89132e55e07c529193a046bbfc3.setIcon(icon_e418483d6491c7f01eb1c6853c251709);
+            
+    
+            marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c.addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            var poly_line_5f4e6cdfba845b10942a97a6f2a6f656 = L.polyline(
+                [[40.141944, -82.970278], [40.141944, -82.969722]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            var poly_line_76bbc67348072dadd49503e0cdb011d5 = L.polyline(
+                [[34.73611, -86.57611], [34.73639, -86.57611]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            var poly_line_8d88cab93bb916e51fbbdc72fa6605af = L.polyline(
+                [[34.73555, -86.57777], [34.73555, -86.57805]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            var poly_line_6fb03549d734ecf5db2981e5699b4bee = L.polyline(
+                [[34.735, -86.579167], [34.734722, -86.579444]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            var poly_line_f96d55fa6eee1bc23b068dd1f36683c7 = L.polyline(
+                [[34.728889, -86.583611], [34.729167, -86.583611]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            var poly_line_7a9f91f56171fa00e09cf6a86e2a1ef0 = L.polyline(
+                [[34.729167, -86.582778], [34.729167, -86.5825]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            var poly_line_b1558ec793a180979e867deb51c376a5 = L.polyline(
+                [[34.735556, -86.565278], [34.735556, -86.565556]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            var poly_line_a36df2188b88697039553696c65e21a8 = L.polyline(
+                [[40.009167, -83.009167], [40.006111, -83.009167]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_f41b5199d1ff9a888a50a473bf811977);
+        
+    
+            map_f41b5199d1ff9a888a50a473bf811977.fitBounds(
+                [[40.1411, -82.9814], [40.1411, -82.9814], [40.141944, -82.970278], [40.141944, -82.969722], [39.9944, -83.0019], [39.9944, -83.0019], [39.983333, -83.001944], [39.983333, -83.001944], [34.735556, -86.575278], [34.735556, -86.575278], [34.73611, -86.57611], [34.73639, -86.57611], [34.73555, -86.57777], [34.73555, -86.57805], [34.735, -86.579167], [34.734722, -86.579444], [34.728889, -86.583611], [34.729167, -86.583611], [34.729167, -86.583611], [34.729167, -86.583611], [34.729167, -86.582778], [34.729167, -86.5825], [34.735556, -86.565278], [34.735556, -86.565556], [40.009167, -83.009167], [40.006111, -83.009167]],
+                {}
+            );
+        
+    
+            var layer_control_5ad5d132aadfba2dc4d7abadeb69fe72_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_da6a1f66a1ade3cd7fd4f31310371e8d,
+                    "Satellite" : tile_layer_b6cba8d0d34492ce8a90fbdef0260278,
+                },
+                overlays :  {
+                    "macro_element_9636a4f3592b1f80b9cedc74718f9c1c" : marker_cluster_9636a4f3592b1f80b9cedc74718f9c1c,
+                },
+            };
+            let layer_control_5ad5d132aadfba2dc4d7abadeb69fe72 = L.control.layers(
+                layer_control_5ad5d132aadfba2dc4d7abadeb69fe72_layers.base_layers,
+                layer_control_5ad5d132aadfba2dc4d7abadeb69fe72_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_f41b5199d1ff9a888a50a473bf811977);
+
+        
+</script>
+</html>

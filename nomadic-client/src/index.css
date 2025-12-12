@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fix Leaflet map height */
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Custom styling for the Range Slider */
+input[type=range] {
+    @apply h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    @apply w-4 h-4 bg-blue-600 rounded-full appearance-none shadow-md transition-transform hover:scale-110;
+}
+
+/* Glassmorphism utilities (optional but looks nice) */
+.glass {
+    @apply bg-white/90 backdrop-blur-md border border-white/20 shadow-xl;
+}

@@ -1,3 +1,13 @@
-__pycache__/
+# Secrets
 .env
-output/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Node.js (Frontend)
+nomadic-client/node_modules/
+
+# Optional: Ignore build folder if you want Render to build it (Cleaner repo)
+# nomadic-client/dist/
