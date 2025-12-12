@@ -37,12 +37,12 @@ function App() {
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [playbackSpeed, setPlaybackSpeed] = useState(2); 
+  const [playbackSpeed, setPlaybackSpeed] = useState(2);
   const [hasInteracted, setHasInteracted] = useState(false);
-  
+
   // Initialize as null so no event is selected by default
   const [selectedId, setSelectedId] = useState(null);
-  
+
   const playInterval = useRef(null);
 
   useEffect(() => {
@@ -63,12 +63,12 @@ function App() {
     if (!batchId) return alert("Please enter a Batch ID");
     setLoading(true);
     setHasInteracted(false);
-    
+
     // 1. Reset selection immediately when starting a new search
-    setSelectedId(null); 
-    
-    const API_URL = 'http://localhost:8000'; 
-    
+    setSelectedId(null);
+
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
     try {
       const res = await fetch(`${API_URL}/api/visualize`, {
         method: 'POST',
@@ -77,19 +77,19 @@ function App() {
       });
       if (!res.ok) throw new Error((await res.json()).detail);
       const geoJson = await res.json();
-      
-      const features = geoJson.features.sort((a,b) => a.properties.timestamp - b.properties.timestamp);
+
+      const features = geoJson.features.sort((a, b) => a.properties.timestamp - b.properties.timestamp);
       if (features.length > 0) {
         const start = features[0].properties.timestamp;
         const lastEvent = features[features.length - 1];
         const end = (lastEvent.properties.timestamp_end || lastEvent.properties.timestamp) + 2000;
-        
+
         setStartTime(start);
         setEndTime(end);
         setCurrentTime(start);
         setData(geoJson);
         addToHistory(batchId);
-        
+
         // --- FIX: DO NOT SET selectedId HERE ---
         // By leaving this out, the map loads without popping up any video.
       } else {
@@ -115,19 +115,19 @@ function App() {
 
   useEffect(() => {
     if (!data) return;
-    const activeEvents = data.features.filter(f => 
-      currentTime >= f.properties.timestamp && 
+    const activeEvents = data.features.filter(f =>
+      currentTime >= f.properties.timestamp &&
       currentTime <= f.properties.timestamp_end
     );
 
     if (activeEvents.length > 0) {
       const isSelectedStillActive = activeEvents.some(f => f.properties.id === selectedId);
-      
+
       if (!isSelectedStillActive) {
         // --- FIX: Only auto-select if user is actively PLAYING ---
         // If simply scrubbing or loading, we do NOT auto-select.
         if (isPlaying) {
-             setSelectedId(activeEvents[0].properties.id);
+          setSelectedId(activeEvents[0].properties.id);
         }
       }
     } else {
@@ -144,7 +144,7 @@ function App() {
             setIsPlaying(false);
             return startTime;
           }
-          return prev + (100 * playbackSpeed); 
+          return prev + (100 * playbackSpeed);
         });
       }, 100);
     } else {
@@ -157,12 +157,12 @@ function App() {
 
   return (
     <div className="flex flex-col h-screen bg-slate-100 overflow-hidden">
-      
+
       <div className="bg-white shadow-sm p-4 z-[2000] relative shrink-0">
         <div className="max-w-full mx-4 flex flex-col md:flex-row justify-between items-center gap-4">
           <h1 className="text-xl font-bold text-slate-800">NomadicML <span className="text-blue-600">Geovisualizer</span></h1>
           <div className="flex gap-2 w-full max-w-2xl items-center">
-             <details className="relative">
+            <details className="relative">
               <summary className="list-none bg-white border border-slate-300 text-slate-600 px-3 py-2 rounded-lg cursor-pointer hover:bg-slate-50 text-sm font-medium select-none transition-colors">🕒</summary>
               <div className="absolute top-full left-0 mt-2 w-72 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden z-[5000]">
                 {recentBatches.map(id => (
@@ -186,26 +186,26 @@ function App() {
       <div className="flex-1 flex overflow-hidden relative">
         <div className="flex-1 relative h-full">
           <MapContainer center={[39.8283, -98.5795]} zoom={4} zoomControl={false} style={{ height: "100%", width: "100%" }}>
-              <LayersControl position="topright">
-                <LayersControl.BaseLayer name="Dark Mode"><TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" attribution='CartoDB' /></LayersControl.BaseLayer>
-                <LayersControl.BaseLayer checked name="Light Mode"><TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution='CartoDB' /></LayersControl.BaseLayer>
-                <LayersControl.BaseLayer name="Satellite"><TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution='Esri' /></LayersControl.BaseLayer>
-              </LayersControl>
-              
-              {data && (
-                <MapLayer 
-                  data={data} 
-                  currentTime={currentTime} 
-                  showAll={!hasInteracted} 
-                  selectedId={selectedId} 
-                />
-              )}
-              
-              {data && <AutoFitBounds data={data} />}
+            <LayersControl position="topright">
+              <LayersControl.BaseLayer name="Dark Mode"><TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" attribution='CartoDB' /></LayersControl.BaseLayer>
+              <LayersControl.BaseLayer checked name="Light Mode"><TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution='CartoDB' /></LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="Satellite"><TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution='Esri' /></LayersControl.BaseLayer>
+            </LayersControl>
+
+            {data && (
+              <MapLayer
+                data={data}
+                currentTime={currentTime}
+                showAll={!hasInteracted}
+                selectedId={selectedId}
+              />
+            )}
+
+            {data && <AutoFitBounds data={data} />}
           </MapContainer>
           {data && (
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[90%] z-[1000]">
-              <TimelineControls 
+              <TimelineControls
                 startTime={startTime} endTime={endTime} currentTime={currentTime} isPlaying={isPlaying}
                 playbackSpeed={playbackSpeed}
                 onPlayPause={() => { setHasInteracted(true); setIsPlaying(!isPlaying); }}
@@ -218,11 +218,11 @@ function App() {
         </div>
         {data && (
           <div className="w-[350px] shrink-0 h-full relative transition-all duration-300 ease-in-out">
-            <EventGrid 
-              events={eventList} 
-              currentTime={currentTime} 
-              selectedId={selectedId} 
-              onEventClick={handleEventClick} 
+            <EventGrid
+              events={eventList}
+              currentTime={currentTime}
+              selectedId={selectedId}
+              onEventClick={handleEventClick}
             />
           </div>
         )}
