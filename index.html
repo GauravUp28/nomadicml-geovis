@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NomadicML Geovisualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #f3f4f6; }
+    </style>
+</head>
+<body class="flex flex-col h-screen">
+
+    <div class="bg-white shadow-md p-4 flex items-center justify-between z-10">
+        <div class="flex items-center gap-2">
+            <h1 class="text-xl font-bold text-gray-800 tracking-tight">NomadicML <span class="text-blue-600">Geovisualizer</span></h1>
+        </div>
+
+        <div class="flex gap-2 w-full max-w-xl">
+            <input 
+                type="text" 
+                id="batchId" 
+                placeholder="Enter Batch ID..." 
+                class="flex-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+            <button 
+                onclick="visualize()" 
+                id="visBtn"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md transition-colors flex items-center gap-2"
+            >
+                <span>Visualize</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="flex-1 relative w-full h-full bg-gray-200">
+        <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 z-20">
+            <div class="flex flex-col items-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <p class="mt-4 text-gray-600 font-medium">Fetching GPS Data & Videos...</p>
+            </div>
+        </div>
+        
+        <iframe id="mapFrame" class="w-full h-full border-none" title="Map"></iframe>
+    </div>
+
+    <script>
+        // Load blank map on startup
+        window.onload = async function() {
+            const iframe = document.getElementById('mapFrame');
+            try {
+                const response = await fetch('/api/base-map');
+                if (response.ok) {
+                    const mapHtml = await response.json();
+                    iframe.srcdoc = mapHtml;
+                }
+            } catch (e) {
+                console.error("Could not load base map", e);
+            }
+        };
+
+        async function visualize() {
+            const batchId = document.getElementById('batchId').value.trim();
+            const btn = document.getElementById('visBtn');
+            const loader = document.getElementById('loader');
+            const iframe = document.getElementById('mapFrame');
+
+            if (!batchId) {
+                alert("Please enter a valid Batch ID");
+                return;
+            }
+
+            // UI Loading State
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
+            loader.classList.remove('hidden');
+
+            try {
+                const response = await fetch('/visualize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ batchId: batchId })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || "Failed to fetch map");
+                }
+
+                // Get HTML string and inject into iframe
+                const mapHtml = await response.json();
+                iframe.srcdoc = mapHtml;
+
+            } catch (error) {
+                alert("Error: " + error.message);
+                console.error(error);
+            } finally {
+                // Reset UI
+                btn.disabled = false;
+                btn.classList.remove('opacity-50');
+                loader.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

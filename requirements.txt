@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pandas
+folium
+requests
+nomadicml
+python-multipart
+python-dotenv

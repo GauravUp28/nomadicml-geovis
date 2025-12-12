@@ -1,0 +1,2699 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_cd47109eb67904e6f9881835cf3d2a2d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_cd47109eb67904e6f9881835cf3d2a2d" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_cd47109eb67904e6f9881835cf3d2a2d = L.map(
+                "map_cd47109eb67904e6f9881835cf3d2a2d",
+                {
+                    center: [0.0, 0.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 1,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_ec3baa93c77a7823bd190fead3f261d0 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_ec3baa93c77a7823bd190fead3f261d0.addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            var marker_cluster_598e99136645304bdc1aed11bab9214d = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var marker_482b97d8f6cb8655fea837e6d81aadef = L.marker(
+                [40.141111, -82.9825],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_2382b31fd21a3eafe4df771bc06334b4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d9a8a6016e3794210a2dd4ac555353c0 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_cbb46c00b35bc5b0dffde79d8e89aa68 = $(`<div id="html_cbb46c00b35bc5b0dffde79d8e89aa68" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:18</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">From 00:18 to 00:30, the recording vehicle... slow down due to traffic congestion.</p>         </div>         </div>`)[0];
+                popup_d9a8a6016e3794210a2dd4ac555353c0.setContent(html_cbb46c00b35bc5b0dffde79d8e89aa68);
+            
+        
+
+        marker_482b97d8f6cb8655fea837e6d81aadef.bindPopup(popup_d9a8a6016e3794210a2dd4ac555353c0)
+        ;
+
+        
+    
+    
+            marker_482b97d8f6cb8655fea837e6d81aadef.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_482b97d8f6cb8655fea837e6d81aadef.setIcon(icon_2382b31fd21a3eafe4df771bc06334b4);
+            
+    
+            var marker_32d380e8797514ed4cc741910831371d = L.marker(
+                [40.1411, -82.9814],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_337137c378ec3799ce415a128f5eb321 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1063af45a848f58baf65f548af9288d0 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_e3d31a854f976e841af812276e8d2ef5 = $(`<div id="html_e3d31a854f976e841af812276e8d2ef5" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:37</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">The camera vehicle comes to a complete stop... at a red light.</p>         </div>         </div>`)[0];
+                popup_1063af45a848f58baf65f548af9288d0.setContent(html_e3d31a854f976e841af812276e8d2ef5);
+            
+        
+
+        marker_32d380e8797514ed4cc741910831371d.bindPopup(popup_1063af45a848f58baf65f548af9288d0)
+        ;
+
+        
+    
+    
+            marker_32d380e8797514ed4cc741910831371d.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_32d380e8797514ed4cc741910831371d.setIcon(icon_337137c378ec3799ce415a128f5eb321);
+            
+    
+            var marker_d70e75c3d2d9291c4a47565a0dad2ab3 = L.marker(
+                [40.141389, -82.976944],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_ceee874b6bfcac57f87fc323aadc502f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_25bc96fe2c1566a7b916b54c2902275e = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_c121f732fea7612529d0f046542c38e3 = $(`<div id="html_c121f732fea7612529d0f046542c38e3" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:09</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">A silver minivan is observed stopped in the left-hand turn lane.</p>         </div>         </div>`)[0];
+                popup_25bc96fe2c1566a7b916b54c2902275e.setContent(html_c121f732fea7612529d0f046542c38e3);
+            
+        
+
+        marker_d70e75c3d2d9291c4a47565a0dad2ab3.bindPopup(popup_25bc96fe2c1566a7b916b54c2902275e)
+        ;
+
+        
+    
+    
+            marker_d70e75c3d2d9291c4a47565a0dad2ab3.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d70e75c3d2d9291c4a47565a0dad2ab3.setIcon(icon_ceee874b6bfcac57f87fc323aadc502f);
+            
+    
+            var marker_75826418bf915273f20dbce1ca5d4928 = L.marker(
+                [40.141389, -82.975556],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_130a81b49f9ca2f359d8c244c9b210ff = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2b1f2ec470661ad9ae6cff8562863b08 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_b192e31c671c3b6451402b3b02f5e1f3 = $(`<div id="html_b192e31c671c3b6451402b3b02f5e1f3" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:16</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">A black SUV is seen stopped in a left-hand turn lane.</p>         </div>         </div>`)[0];
+                popup_2b1f2ec470661ad9ae6cff8562863b08.setContent(html_b192e31c671c3b6451402b3b02f5e1f3);
+            
+        
+
+        marker_75826418bf915273f20dbce1ca5d4928.bindPopup(popup_2b1f2ec470661ad9ae6cff8562863b08)
+        ;
+
+        
+    
+    
+            marker_75826418bf915273f20dbce1ca5d4928.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_75826418bf915273f20dbce1ca5d4928.setIcon(icon_130a81b49f9ca2f359d8c244c9b210ff);
+            
+    
+            var marker_9e700224fca9e6219060f1d4e85d030f = L.marker(
+                [40.141667, -82.972778],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_3292960e7f8a5af73be7358d9c1e14e4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b189b0278ea005970440e597ce476330 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_87052f93203bfe73efac396a34af71d1 = $(`<div id="html_87052f93203bfe73efac396a34af71d1" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:29</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">A black Volvo SUV comes to a complete stop in the right lane.</p>         </div>         </div>`)[0];
+                popup_b189b0278ea005970440e597ce476330.setContent(html_87052f93203bfe73efac396a34af71d1);
+            
+        
+
+        marker_9e700224fca9e6219060f1d4e85d030f.bindPopup(popup_b189b0278ea005970440e597ce476330)
+        ;
+
+        
+    
+    
+            marker_9e700224fca9e6219060f1d4e85d030f.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9e700224fca9e6219060f1d4e85d030f.setIcon(icon_3292960e7f8a5af73be7358d9c1e14e4);
+            
+    
+            var marker_2d55c007a58e8c88b2d0c254271a27a7 = L.marker(
+                [40.141944, -82.970278],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_74102a27c86f17c2b6996e17d2fea6e5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8fc571eae9fdcc53a2505e89706b4d52 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_0b7eead69db8cfcb5d38c70a0901fd46 = $(`<div id="html_0b7eead69db8cfcb5d38c70a0901fd46" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:43</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Vehicle approaches an intersection with a red traffic light.</p>         </div>         </div>`)[0];
+                popup_8fc571eae9fdcc53a2505e89706b4d52.setContent(html_0b7eead69db8cfcb5d38c70a0901fd46);
+            
+        
+
+        marker_2d55c007a58e8c88b2d0c254271a27a7.bindPopup(popup_8fc571eae9fdcc53a2505e89706b4d52)
+        ;
+
+        
+    
+    
+            marker_2d55c007a58e8c88b2d0c254271a27a7.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2d55c007a58e8c88b2d0c254271a27a7.setIcon(icon_74102a27c86f17c2b6996e17d2fea6e5);
+            
+    
+            var marker_7280295227f4b9f7e97fe87cc7df130b = L.marker(
+                [39.994444, -83.001944],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_6bac5a0f6324fcc766d8774ad9a4c86b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1682e77bcfaf91ec3bd11d765da3d414 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_340267bd4506129ae76e323723882fe0 = $(`<div id="html_340267bd4506129ae76e323723882fe0" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:00</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Camera vehicle stationary behind another car at a red light.</p>         </div>         </div>`)[0];
+                popup_1682e77bcfaf91ec3bd11d765da3d414.setContent(html_340267bd4506129ae76e323723882fe0);
+            
+        
+
+        marker_7280295227f4b9f7e97fe87cc7df130b.bindPopup(popup_1682e77bcfaf91ec3bd11d765da3d414)
+        ;
+
+        
+    
+    
+            marker_7280295227f4b9f7e97fe87cc7df130b.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7280295227f4b9f7e97fe87cc7df130b.setIcon(icon_6bac5a0f6324fcc766d8774ad9a4c86b);
+            
+    
+            var marker_4c94a7606b62db2563914dcf20329818 = L.marker(
+                [39.9944, -83.0019],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_32b0ad6e5a77a9a9c83a059678ed75ba = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_edf48cb21d65404ad1e1dc04701dd8a8 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_df74237f7d4ae02c3108d1965faee629 = $(`<div id="html_df74237f7d4ae02c3108d1965faee629" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:30</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Vehicle stopped at red light, accelerates at 00:32.</p>         </div>         </div>`)[0];
+                popup_edf48cb21d65404ad1e1dc04701dd8a8.setContent(html_df74237f7d4ae02c3108d1965faee629);
+            
+        
+
+        marker_4c94a7606b62db2563914dcf20329818.bindPopup(popup_edf48cb21d65404ad1e1dc04701dd8a8)
+        ;
+
+        
+    
+    
+            marker_4c94a7606b62db2563914dcf20329818.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4c94a7606b62db2563914dcf20329818.setIcon(icon_32b0ad6e5a77a9a9c83a059678ed75ba);
+            
+    
+            var marker_7b844c3459b38f98950e6d3af728481d = L.marker(
+                [39.9944, -83.0],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_88428b49df367ea5d9f06ba7f43bf314 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_184ee9da08529478d3d9c19db3b39d5c = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_3b47e93b7b556fc172b5a595b0dc4518 = $(`<div id="html_3b47e93b7b556fc172b5a595b0dc4518" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:53</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Vehicle slows and stops behind red SUV due to traffic.</p>         </div>         </div>`)[0];
+                popup_184ee9da08529478d3d9c19db3b39d5c.setContent(html_3b47e93b7b556fc172b5a595b0dc4518);
+            
+        
+
+        marker_7b844c3459b38f98950e6d3af728481d.bindPopup(popup_184ee9da08529478d3d9c19db3b39d5c)
+        ;
+
+        
+    
+    
+            marker_7b844c3459b38f98950e6d3af728481d.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7b844c3459b38f98950e6d3af728481d.setIcon(icon_88428b49df367ea5d9f06ba7f43bf314);
+            
+    
+            var marker_ff12ea49877c562a4dde5f6af11de505 = L.marker(
+                [39.9944, -83.0],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_2e14d762d2f68d713dbb87ff7a08408f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7e70ddb868b8d6ab160b50ea4536ab59 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_422eb917b27ca5fac8a9ca357956593e = $(`<div id="html_422eb917b27ca5fac8a9ca357956593e" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:05</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">White van approaches from left and stops at intersection.</p>         </div>         </div>`)[0];
+                popup_7e70ddb868b8d6ab160b50ea4536ab59.setContent(html_422eb917b27ca5fac8a9ca357956593e);
+            
+        
+
+        marker_ff12ea49877c562a4dde5f6af11de505.bindPopup(popup_7e70ddb868b8d6ab160b50ea4536ab59)
+        ;
+
+        
+    
+    
+            marker_ff12ea49877c562a4dde5f6af11de505.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ff12ea49877c562a4dde5f6af11de505.setIcon(icon_2e14d762d2f68d713dbb87ff7a08408f);
+            
+    
+            var marker_b73a15a078d012b5b7f87cfaa05a5bad = L.marker(
+                [39.9944, -82.9997],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_690c036cf169dc6bf4494c7efbf202db = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e36b179b3c48fbc35d8ea94d95e34131 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_0841c1e4ba30a6d3ec53725f8d806800 = $(`<div id="html_0841c1e4ba30a6d3ec53725f8d806800" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:13</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Black sedan approaching red light and stopping.</p>         </div>         </div>`)[0];
+                popup_e36b179b3c48fbc35d8ea94d95e34131.setContent(html_0841c1e4ba30a6d3ec53725f8d806800);
+            
+        
+
+        marker_b73a15a078d012b5b7f87cfaa05a5bad.bindPopup(popup_e36b179b3c48fbc35d8ea94d95e34131)
+        ;
+
+        
+    
+    
+            marker_b73a15a078d012b5b7f87cfaa05a5bad.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b73a15a078d012b5b7f87cfaa05a5bad.setIcon(icon_690c036cf169dc6bf4494c7efbf202db);
+            
+    
+            var marker_7b3d60819a7c2263a9ab23341d04e3ab = L.marker(
+                [39.999722, -82.996944],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_ff3b1de209fa27f3472256067ab8d95a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_aad54c809184cadc856bac2e088813a0 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_09695589463aa4accc4760932e566bf7 = $(`<div id="html_09695589463aa4accc4760932e566bf7" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:34</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Blue SUV pulling out from parking, briefly stops to yield.</p>         </div>         </div>`)[0];
+                popup_aad54c809184cadc856bac2e088813a0.setContent(html_09695589463aa4accc4760932e566bf7);
+            
+        
+
+        marker_7b3d60819a7c2263a9ab23341d04e3ab.bindPopup(popup_aad54c809184cadc856bac2e088813a0)
+        ;
+
+        
+    
+    
+            marker_7b3d60819a7c2263a9ab23341d04e3ab.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7b3d60819a7c2263a9ab23341d04e3ab.setIcon(icon_ff3b1de209fa27f3472256067ab8d95a);
+            
+    
+            var marker_273f6d027fa09d7d1f4b343a35ee3e7a = L.marker(
+                [34.735556, -86.575278],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_2e840c761b1e0d035ec056758dd4376c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f201bb379f94dc8e6ed70c936037f89a = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_f8264918240598d073555d8deb902570 = $(`<div id="html_f8264918240598d073555d8deb902570" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:18</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Ego vehicle stops at multi-way stop intersection.</p>         </div>         </div>`)[0];
+                popup_f201bb379f94dc8e6ed70c936037f89a.setContent(html_f8264918240598d073555d8deb902570);
+            
+        
+
+        marker_273f6d027fa09d7d1f4b343a35ee3e7a.bindPopup(popup_f201bb379f94dc8e6ed70c936037f89a)
+        ;
+
+        
+    
+    
+            marker_273f6d027fa09d7d1f4b343a35ee3e7a.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_273f6d027fa09d7d1f4b343a35ee3e7a.setIcon(icon_2e840c761b1e0d035ec056758dd4376c);
+            
+    
+            var marker_9220228ea2cff65a653fc7fda263730d = L.marker(
+                [34.736389, -86.576111],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_7c7783a145dc1055ef642b41b0d14d77 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a9b2cd59e309cd386cf8027bdecfdd60 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_7f4a416db46acf472a127b2872e73eb8 = $(`<div id="html_7f4a416db46acf472a127b2872e73eb8" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:44</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Vehicle stops for red light, red pickup turns left.</p>         </div>         </div>`)[0];
+                popup_a9b2cd59e309cd386cf8027bdecfdd60.setContent(html_7f4a416db46acf472a127b2872e73eb8);
+            
+        
+
+        marker_9220228ea2cff65a653fc7fda263730d.bindPopup(popup_a9b2cd59e309cd386cf8027bdecfdd60)
+        ;
+
+        
+    
+    
+            marker_9220228ea2cff65a653fc7fda263730d.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9220228ea2cff65a653fc7fda263730d.setIcon(icon_7c7783a145dc1055ef642b41b0d14d77);
+            
+    
+            var marker_6b443846854ae99253eb30987224f082 = L.marker(
+                [34.735556, -86.578056],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_09c9963b5a5f59342c0bb1273a4fbd22 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_35fc8b0c8b3f8f0eff3eae6b4b10beb5 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_b1e5b088ebcb9821c1c1f073f7c8ad29 = $(`<div id="html_b1e5b088ebcb9821c1c1f073f7c8ad29" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:14</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Ego vehicle stops at stop sign, white sedan crosses.</p>         </div>         </div>`)[0];
+                popup_35fc8b0c8b3f8f0eff3eae6b4b10beb5.setContent(html_b1e5b088ebcb9821c1c1f073f7c8ad29);
+            
+        
+
+        marker_6b443846854ae99253eb30987224f082.bindPopup(popup_35fc8b0c8b3f8f0eff3eae6b4b10beb5)
+        ;
+
+        
+    
+    
+            marker_6b443846854ae99253eb30987224f082.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6b443846854ae99253eb30987224f082.setIcon(icon_09c9963b5a5f59342c0bb1273a4fbd22);
+            
+    
+            var marker_9a3df40a1278f1e468dc5a201580615a = L.marker(
+                [34.735, -86.579167],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_58f8279c64460274a2d50b608fabfdfe = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d5d553f8f482f2608b656c5b98418e16 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_72edc124196edd0f0dbca706f59c6b14 = $(`<div id="html_72edc124196edd0f0dbca706f59c6b14" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:37</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Vehicle stops at all-way stop intersection.</p>         </div>         </div>`)[0];
+                popup_d5d553f8f482f2608b656c5b98418e16.setContent(html_72edc124196edd0f0dbca706f59c6b14);
+            
+        
+
+        marker_9a3df40a1278f1e468dc5a201580615a.bindPopup(popup_d5d553f8f482f2608b656c5b98418e16)
+        ;
+
+        
+    
+    
+            marker_9a3df40a1278f1e468dc5a201580615a.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9a3df40a1278f1e468dc5a201580615a.setIcon(icon_58f8279c64460274a2d50b608fabfdfe);
+            
+    
+            var marker_02c1b50523b6f023d7bbfee24631b417 = L.marker(
+                [34.727222, -86.586389],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_7b82a54eb46992afb6dca7d6c5e12053 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_711a9ec3bcb4993ca1d053ba836238f2 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_830fb64d72786a848c62c0436cb2c3e5 = $(`<div id="html_830fb64d72786a848c62c0436cb2c3e5" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:18</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">White SUV ahead slows and stops due to congestion.</p>         </div>         </div>`)[0];
+                popup_711a9ec3bcb4993ca1d053ba836238f2.setContent(html_830fb64d72786a848c62c0436cb2c3e5);
+            
+        
+
+        marker_02c1b50523b6f023d7bbfee24631b417.bindPopup(popup_711a9ec3bcb4993ca1d053ba836238f2)
+        ;
+
+        
+    
+    
+            marker_02c1b50523b6f023d7bbfee24631b417.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_02c1b50523b6f023d7bbfee24631b417.setIcon(icon_7b82a54eb46992afb6dca7d6c5e12053);
+            
+    
+            var marker_3fd0e3a34e705b2cacb0c09fc621c426 = L.marker(
+                [34.726944, -86.586389],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_d21cf38be664765c56e9733e4a5738bf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_85e174b395f8ad0a007e433c39b8b221 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_7826f09f81875bc869df404a9fc22677 = $(`<div id="html_7826f09f81875bc869df404a9fc22677" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:19</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Black SUV in right lane stops for traffic light.</p>         </div>         </div>`)[0];
+                popup_85e174b395f8ad0a007e433c39b8b221.setContent(html_7826f09f81875bc869df404a9fc22677);
+            
+        
+
+        marker_3fd0e3a34e705b2cacb0c09fc621c426.bindPopup(popup_85e174b395f8ad0a007e433c39b8b221)
+        ;
+
+        
+    
+    
+            marker_3fd0e3a34e705b2cacb0c09fc621c426.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3fd0e3a34e705b2cacb0c09fc621c426.setIcon(icon_d21cf38be664765c56e9733e4a5738bf);
+            
+    
+            var marker_f03d24a47eceaf58e53c61f4bc1734d6 = L.marker(
+                [34.726667, -86.585556],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_044388c99935e364504d889d4e5cf640 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4e294da655c773d30958cc5e309c7e90 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_bf101feab6d4afe47ce19d817afde1b4 = $(`<div id="html_bf101feab6d4afe47ce19d817afde1b4" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:34</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">White pickup truck stops in left-turn-only lane.</p>         </div>         </div>`)[0];
+                popup_4e294da655c773d30958cc5e309c7e90.setContent(html_bf101feab6d4afe47ce19d817afde1b4);
+            
+        
+
+        marker_f03d24a47eceaf58e53c61f4bc1734d6.bindPopup(popup_4e294da655c773d30958cc5e309c7e90)
+        ;
+
+        
+    
+    
+            marker_f03d24a47eceaf58e53c61f4bc1734d6.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f03d24a47eceaf58e53c61f4bc1734d6.setIcon(icon_044388c99935e364504d889d4e5cf640);
+            
+    
+            var marker_6169a9e9ca51432c26508ded8eb0c9b7 = L.marker(
+                [34.7275, -86.584444],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_c4fe04316851edf59fa06df225c23f55 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ad92eeb9c8aa85ca1394a37353b21e91 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_ae0595027d8eabab15838113d46c0928 = $(`<div id="html_ae0595027d8eabab15838113d46c0928" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:45</p>             <p><b>Severity:</b> <span style="color:orange">MEDIUM</span></p>             <hr>             <p style="font-size:12px;">Multiple vehicles stopped at red light intersection.</p>         </div>         </div>`)[0];
+                popup_ad92eeb9c8aa85ca1394a37353b21e91.setContent(html_ae0595027d8eabab15838113d46c0928);
+            
+        
+
+        marker_6169a9e9ca51432c26508ded8eb0c9b7.bindPopup(popup_ad92eeb9c8aa85ca1394a37353b21e91)
+        ;
+
+        
+    
+    
+            marker_6169a9e9ca51432c26508ded8eb0c9b7.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6169a9e9ca51432c26508ded8eb0c9b7.setIcon(icon_c4fe04316851edf59fa06df225c23f55);
+            
+    
+            var marker_91779f9e20e2227f919ebf00acfcec54 = L.marker(
+                [34.728889, -86.583611],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_105f2b4c37d7690bc41993c493616a9e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e48acebbc58af374b40b120693a24089 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_54548aba8a8b94424b019b43ccfd3692 = $(`<div id="html_54548aba8a8b94424b019b43ccfd3692" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:25</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Vehicle decelerates and stops at red light.</p>         </div>         </div>`)[0];
+                popup_e48acebbc58af374b40b120693a24089.setContent(html_54548aba8a8b94424b019b43ccfd3692);
+            
+        
+
+        marker_91779f9e20e2227f919ebf00acfcec54.bindPopup(popup_e48acebbc58af374b40b120693a24089)
+        ;
+
+        
+    
+    
+            marker_91779f9e20e2227f919ebf00acfcec54.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_91779f9e20e2227f919ebf00acfcec54.setIcon(icon_105f2b4c37d7690bc41993c493616a9e);
+            
+    
+            var marker_1d90d38581b0ec78cbcc2a3947b4b81f = L.marker(
+                [34.729167, -86.583611],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_bb7ae9b942afbaadb9adf07cb9a417b0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ba7a4b4f91aadbf8ed18f7ead4cad51d = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_304075c990c93314ab73b2d978957378 = $(`<div id="html_304075c990c93314ab73b2d978957378" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:30</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Ego vehicle stopped at red light, red car crosses.</p>         </div>         </div>`)[0];
+                popup_ba7a4b4f91aadbf8ed18f7ead4cad51d.setContent(html_304075c990c93314ab73b2d978957378);
+            
+        
+
+        marker_1d90d38581b0ec78cbcc2a3947b4b81f.bindPopup(popup_ba7a4b4f91aadbf8ed18f7ead4cad51d)
+        ;
+
+        
+    
+    
+            marker_1d90d38581b0ec78cbcc2a3947b4b81f.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1d90d38581b0ec78cbcc2a3947b4b81f.setIcon(icon_bb7ae9b942afbaadb9adf07cb9a417b0);
+            
+    
+            var marker_e512a77236d7b412f44e315d235616a5 = L.marker(
+                [34.729167, -86.582778],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_13bba76431df7c64e06e0226cb090a88 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b87d1fe6278a47385688e9b50bb0bbd0 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_533ef7e72aa7d4b53949a924d4f6db79 = $(`<div id="html_533ef7e72aa7d4b53949a924d4f6db79" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:53</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Ego vehicle stops at all-way stop before right turn.</p>         </div>         </div>`)[0];
+                popup_b87d1fe6278a47385688e9b50bb0bbd0.setContent(html_533ef7e72aa7d4b53949a924d4f6db79);
+            
+        
+
+        marker_e512a77236d7b412f44e315d235616a5.bindPopup(popup_b87d1fe6278a47385688e9b50bb0bbd0)
+        ;
+
+        
+    
+    
+            marker_e512a77236d7b412f44e315d235616a5.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e512a77236d7b412f44e315d235616a5.setIcon(icon_13bba76431df7c64e06e0226cb090a88);
+            
+    
+            var marker_ae253380deae5317c2488ee8eb5c8a8e = L.marker(
+                [34.735556, -86.565278],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_3db02de0a0c34773e8bb8aeb4102756f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_070137ebe3f05b658415d7b0e6dbb24b = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_4244f57ef9ae1733339d07bc4ab768a0 = $(`<div id="html_4244f57ef9ae1733339d07bc4ab768a0" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:22</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Vehicle decelerates and stops at stop sign intersection.</p>         </div>         </div>`)[0];
+                popup_070137ebe3f05b658415d7b0e6dbb24b.setContent(html_4244f57ef9ae1733339d07bc4ab768a0);
+            
+        
+
+        marker_ae253380deae5317c2488ee8eb5c8a8e.bindPopup(popup_070137ebe3f05b658415d7b0e6dbb24b)
+        ;
+
+        
+    
+    
+            marker_ae253380deae5317c2488ee8eb5c8a8e.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ae253380deae5317c2488ee8eb5c8a8e.setIcon(icon_3db02de0a0c34773e8bb8aeb4102756f);
+            
+    
+            var marker_382cff9c73728fb80308e4bbdb72ec25 = L.marker(
+                [34.735556, -86.572222],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_380cb30ce80573001d9db8c59419bac5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b5deaca8f3cfdccadbab2a5d00f246e9 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_fd44d80caa3e62998f51be7b3f33b617 = $(`<div id="html_fd44d80caa3e62998f51be7b3f33b617" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:41</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">White commercial truck stopped on right shoulder.</p>         </div>         </div>`)[0];
+                popup_b5deaca8f3cfdccadbab2a5d00f246e9.setContent(html_fd44d80caa3e62998f51be7b3f33b617);
+            
+        
+
+        marker_382cff9c73728fb80308e4bbdb72ec25.bindPopup(popup_b5deaca8f3cfdccadbab2a5d00f246e9)
+        ;
+
+        
+    
+    
+            marker_382cff9c73728fb80308e4bbdb72ec25.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_382cff9c73728fb80308e4bbdb72ec25.setIcon(icon_380cb30ce80573001d9db8c59419bac5);
+            
+    
+            var marker_9a8056ecea00fe3c43d25d59eedc48ea = L.marker(
+                [40.01694, -83.01194],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_c5057afbb8101332bdf6bf922397481e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6fdf45f6ec6ed4e896c6c7ad0651bea4 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_c3aeff161e26e20ec3b4e385ae4a72fa = $(`<div id="html_c3aeff161e26e20ec3b4e385ae4a72fa" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:00</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Vehicle stopped at red light, creeps forward.</p>         </div>         </div>`)[0];
+                popup_6fdf45f6ec6ed4e896c6c7ad0651bea4.setContent(html_c3aeff161e26e20ec3b4e385ae4a72fa);
+            
+        
+
+        marker_9a8056ecea00fe3c43d25d59eedc48ea.bindPopup(popup_6fdf45f6ec6ed4e896c6c7ad0651bea4)
+        ;
+
+        
+    
+    
+            marker_9a8056ecea00fe3c43d25d59eedc48ea.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9a8056ecea00fe3c43d25d59eedc48ea.setIcon(icon_c5057afbb8101332bdf6bf922397481e);
+            
+    
+            var marker_fdca4e1d6a3e012f870efa1d2265cc93 = L.marker(
+                [40.01111, -83.01055],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_a804cf5e9ceb05ed5c8a4a10f7856958 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b5c02cc974120210dee3fc132beaf37a = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_ff544ffdfd44b5a001f6a0a986cf8ae1 = $(`<div id="html_ff544ffdfd44b5a001f6a0a986cf8ae1" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:55</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">White SUV stopped on side street waiting to turn.</p>         </div>         </div>`)[0];
+                popup_b5c02cc974120210dee3fc132beaf37a.setContent(html_ff544ffdfd44b5a001f6a0a986cf8ae1);
+            
+        
+
+        marker_fdca4e1d6a3e012f870efa1d2265cc93.bindPopup(popup_b5c02cc974120210dee3fc132beaf37a)
+        ;
+
+        
+    
+    
+            marker_fdca4e1d6a3e012f870efa1d2265cc93.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fdca4e1d6a3e012f870efa1d2265cc93.setIcon(icon_a804cf5e9ceb05ed5c8a4a10f7856958);
+            
+    
+            var marker_e7af3fd77a9b2ef4dd543ea4196839f4 = L.marker(
+                [40.01083, -83.01027],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_5548e040f9c144cc4ea06a0e11ed716a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4905e4f5cb9d3820c8eb5604eb280ef7 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_2efff8adb4f338ea6cad6e9ffa9b9793 = $(`<div id="html_2efff8adb4f338ea6cad6e9ffa9b9793" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 00:58</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Second white SUV stopped on left side, pulls out.</p>         </div>         </div>`)[0];
+                popup_4905e4f5cb9d3820c8eb5604eb280ef7.setContent(html_2efff8adb4f338ea6cad6e9ffa9b9793);
+            
+        
+
+        marker_e7af3fd77a9b2ef4dd543ea4196839f4.bindPopup(popup_4905e4f5cb9d3820c8eb5604eb280ef7)
+        ;
+
+        
+    
+    
+            marker_e7af3fd77a9b2ef4dd543ea4196839f4.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e7af3fd77a9b2ef4dd543ea4196839f4.setIcon(icon_5548e040f9c144cc4ea06a0e11ed716a);
+            
+    
+            var marker_f7f4a3b535ef50c15ab9230860d0f4ea = L.marker(
+                [40.01056, -83.01028],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_fb28aa0bec962d40dbb061556c6737cb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b4c2bccb678476b593c6c66306f2bedb = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_962f8ce3cd01a6c12d74039a12e4777f = $(`<div id="html_962f8ce3cd01a6c12d74039a12e4777f" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:01</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Black pickup stopped at green light, accelerates.</p>         </div>         </div>`)[0];
+                popup_b4c2bccb678476b593c6c66306f2bedb.setContent(html_962f8ce3cd01a6c12d74039a12e4777f);
+            
+        
+
+        marker_f7f4a3b535ef50c15ab9230860d0f4ea.bindPopup(popup_b4c2bccb678476b593c6c66306f2bedb)
+        ;
+
+        
+    
+    
+            marker_f7f4a3b535ef50c15ab9230860d0f4ea.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f7f4a3b535ef50c15ab9230860d0f4ea.setIcon(icon_fb28aa0bec962d40dbb061556c6737cb);
+            
+    
+            var marker_788e2ce9800ebb48347c24939cb8dc3b = L.marker(
+                [40.00833, -83.00972],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_70222eba847c32573928f9bdef7dcea7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_aee3982b70f660bfd553fd7c62366955 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_781d55b81c177354686e7c2413c95f39 = $(`<div id="html_781d55b81c177354686e7c2413c95f39" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:20</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">City bus stopped on left side, pulls into traffic.</p>         </div>         </div>`)[0];
+                popup_aee3982b70f660bfd553fd7c62366955.setContent(html_781d55b81c177354686e7c2413c95f39);
+            
+        
+
+        marker_788e2ce9800ebb48347c24939cb8dc3b.bindPopup(popup_aee3982b70f660bfd553fd7c62366955)
+        ;
+
+        
+    
+    
+            marker_788e2ce9800ebb48347c24939cb8dc3b.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_788e2ce9800ebb48347c24939cb8dc3b.setIcon(icon_70222eba847c32573928f9bdef7dcea7);
+            
+    
+            var marker_1474009fef921f9765689101f8eec447 = L.marker(
+                [40.006667, -83.009167],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_d3faff95cfb79748592fd754cb4f6ac8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_409922ec8ce5f7749c2053cf25203be9 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_ebdf03c76288755e8e7a28c03a846401 = $(`<div id="html_ebdf03c76288755e8e7a28c03a846401" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:37</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Public transit bus pulls over to bus stop.</p>         </div>         </div>`)[0];
+                popup_409922ec8ce5f7749c2053cf25203be9.setContent(html_ebdf03c76288755e8e7a28c03a846401);
+            
+        
+
+        marker_1474009fef921f9765689101f8eec447.bindPopup(popup_409922ec8ce5f7749c2053cf25203be9)
+        ;
+
+        
+    
+    
+            marker_1474009fef921f9765689101f8eec447.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1474009fef921f9765689101f8eec447.setIcon(icon_d3faff95cfb79748592fd754cb4f6ac8);
+            
+    
+            var marker_dad06aeabb4d49cec7f9f40c368961d0 = L.marker(
+                [40.006389, -83.009167],
+                {
+}
+            ).addTo(marker_cluster_598e99136645304bdc1aed11bab9214d);
+        
+    
+            var icon_ff437b559c3c3f2bd1c41d558e4acc63 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6d8c1e066e9025968a5d668c43cbf659 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_1992ca6b59e27268de58821ddaea954a = $(`<div id="html_1992ca6b59e27268de58821ddaea954a" style="width: 100.0%; height: 100.0%;">         <div style="width:300px; font-family:sans-serif;">             <h4>Vehicle Stopping</h4>             <p><b>Time:</b> 01:41</p>             <p><b>Severity:</b> <span style="color:blue">LOW</span></p>             <hr>             <p style="font-size:12px;">Vehicle slows and stops at red light.</p>         </div>         </div>`)[0];
+                popup_6d8c1e066e9025968a5d668c43cbf659.setContent(html_1992ca6b59e27268de58821ddaea954a);
+            
+        
+
+        marker_dad06aeabb4d49cec7f9f40c368961d0.bindPopup(popup_6d8c1e066e9025968a5d668c43cbf659)
+        ;
+
+        
+    
+    
+            marker_dad06aeabb4d49cec7f9f40c368961d0.bindTooltip(
+                `<div>
+                     Vehicle Stopping (Start)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_dad06aeabb4d49cec7f9f40c368961d0.setIcon(icon_ff437b559c3c3f2bd1c41d558e4acc63);
+            
+    
+            marker_cluster_598e99136645304bdc1aed11bab9214d.addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            var poly_line_b3dcf8ca096adbb4b1122b9f62c91d4d = L.polyline(
+                [[40.141111, -82.9825], [40.141111, -82.981389]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_b3dcf8ca096adbb4b1122b9f62c91d4d.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7770b2444ccea4874b8776fa82d5c826 = L.circleMarker(
+                [40.141111, -82.981389],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_7770b2444ccea4874b8776fa82d5c826.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3eaf2d1080b370e0845ca4bd27ea23e1 = L.polyline(
+                [[40.1411, -82.9814], [40.1411, -82.9814]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_3eaf2d1080b370e0845ca4bd27ea23e1.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d579c7262e6cb4bf92181a91fd6bcb48 = L.circleMarker(
+                [40.1411, -82.9814],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_d579c7262e6cb4bf92181a91fd6bcb48.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_bb3912161d5f02f7380f11249ca32f10 = L.polyline(
+                [[40.141389, -82.976944], [40.141389, -82.976667]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_bb3912161d5f02f7380f11249ca32f10.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a9b6de6ac610b91e3b4868c25e572d9e = L.circleMarker(
+                [40.141389, -82.976667],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_a9b6de6ac610b91e3b4868c25e572d9e.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_20f905dd44922a1027ebece5613ddef4 = L.polyline(
+                [[40.141389, -82.975556], [40.141389, -82.975]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_20f905dd44922a1027ebece5613ddef4.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ca10a8df8ad106028fbde457e5b2789e = L.circleMarker(
+                [40.141389, -82.975],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_ca10a8df8ad106028fbde457e5b2789e.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_af2ddd49e66b69018ca559badde8f6e6 = L.polyline(
+                [[40.141667, -82.972778], [40.141667, -82.9725]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_af2ddd49e66b69018ca559badde8f6e6.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_81df91bcf963f2fc06e0403dbc83b1f3 = L.circleMarker(
+                [40.141667, -82.9725],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_81df91bcf963f2fc06e0403dbc83b1f3.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_500ae372f8b8e1d039ba43754356629d = L.polyline(
+                [[40.141944, -82.970278], [40.141944, -82.969722]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_500ae372f8b8e1d039ba43754356629d.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_580f9d82aac65861dcb91cc09732ca7d = L.circleMarker(
+                [40.141944, -82.969722],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_580f9d82aac65861dcb91cc09732ca7d.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ac51454c0a3ab03d16c373e51995fbc9 = L.polyline(
+                [[39.994444, -83.001944], [39.994444, -83.001944]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_ac51454c0a3ab03d16c373e51995fbc9.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c869f7c41842fb5c012d5f004187f366 = L.circleMarker(
+                [39.994444, -83.001944],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_c869f7c41842fb5c012d5f004187f366.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f823d0aabcc9f82796503d9f51b2aa24 = L.polyline(
+                [[39.9944, -83.0019], [39.9944, -83.0019]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_f823d0aabcc9f82796503d9f51b2aa24.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d41abe64988a448f3f286405e10386b4 = L.circleMarker(
+                [39.9944, -83.0019],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_d41abe64988a448f3f286405e10386b4.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_97a75629b61177c4406801aef074de6b = L.polyline(
+                [[39.9944, -83.0], [39.9944, -83.0]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_97a75629b61177c4406801aef074de6b.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3e5570bd84df4bc76bf7e0f69b9e76d5 = L.circleMarker(
+                [39.9944, -83.0],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_3e5570bd84df4bc76bf7e0f69b9e76d5.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_166b509b4399a09c48e92cf5e60b8640 = L.polyline(
+                [[39.9944, -83.0], [39.9944, -83.0]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_166b509b4399a09c48e92cf5e60b8640.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_79d46603bc92d08b7347296ee9cc51d8 = L.circleMarker(
+                [39.9944, -83.0],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_79d46603bc92d08b7347296ee9cc51d8.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_987ebed9c68ab50a5287320ede54884b = L.polyline(
+                [[39.9944, -82.9997], [39.9944, -82.9994]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_987ebed9c68ab50a5287320ede54884b.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8f2e6dd05aa6914e7d035ced51fa5653 = L.circleMarker(
+                [39.9944, -82.9994],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_8f2e6dd05aa6914e7d035ced51fa5653.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_43639dfe1fef867184ebfc5376e2059a = L.polyline(
+                [[39.999722, -82.996944], [39.999722, -82.996667]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_43639dfe1fef867184ebfc5376e2059a.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_19a940ec8350fcd81f939f9ec0c3ab62 = L.circleMarker(
+                [39.999722, -82.996667],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_19a940ec8350fcd81f939f9ec0c3ab62.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_daff50af28eb879849c859af4d586d32 = L.polyline(
+                [[34.735556, -86.575278], [34.735556, -86.575278]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_daff50af28eb879849c859af4d586d32.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0fd24ab13f8ad503569f51ef5baac034 = L.circleMarker(
+                [34.735556, -86.575278],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_0fd24ab13f8ad503569f51ef5baac034.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d71bf75b2f905ad8cff2444255efe42b = L.polyline(
+                [[34.736389, -86.576111], [34.736389, -86.576111]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_d71bf75b2f905ad8cff2444255efe42b.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0b2cd0eef93e43919c42137d7d3d4426 = L.circleMarker(
+                [34.736389, -86.576111],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_0b2cd0eef93e43919c42137d7d3d4426.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_7815becd4a20b4ed850114879b54b685 = L.polyline(
+                [[34.735556, -86.578056], [34.735556, -86.578056]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_7815becd4a20b4ed850114879b54b685.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_05e8d6573c067deff98ad91b23c34a70 = L.circleMarker(
+                [34.735556, -86.578056],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_05e8d6573c067deff98ad91b23c34a70.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_76f97e91106cdf4e7dab52bf8608cac2 = L.polyline(
+                [[34.735, -86.579167], [34.734722, -86.579444]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_76f97e91106cdf4e7dab52bf8608cac2.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9b583e21cca322a850971711bfb3a6a0 = L.circleMarker(
+                [34.734722, -86.579444],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_9b583e21cca322a850971711bfb3a6a0.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_525d5f6e740bc18cc7ba573eab50e315 = L.polyline(
+                [[34.727222, -86.586389], [34.726944, -86.586111]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_525d5f6e740bc18cc7ba573eab50e315.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dbc2e18933886ec50491d2a95d58d644 = L.circleMarker(
+                [34.726944, -86.586111],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_dbc2e18933886ec50491d2a95d58d644.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ce16695071419da211a9af7693157a6a = L.polyline(
+                [[34.726944, -86.586389], [34.726944, -86.586111]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_ce16695071419da211a9af7693157a6a.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_016861c56f6b4bab8e087d65b0b07068 = L.circleMarker(
+                [34.726944, -86.586111],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_016861c56f6b4bab8e087d65b0b07068.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c5a4bfd5849703dbd9ac879bc98253ba = L.polyline(
+                [[34.726667, -86.585556], [34.726944, -86.585]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_c5a4bfd5849703dbd9ac879bc98253ba.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_804333accbb79194079fb1b48b2e13e1 = L.circleMarker(
+                [34.726944, -86.585],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_804333accbb79194079fb1b48b2e13e1.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_8bbd38d12eb4a0c139b0238abee6f497 = L.polyline(
+                [[34.7275, -86.584444], [34.727778, -86.583889]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_8bbd38d12eb4a0c139b0238abee6f497.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8acd240e9516dce4df9c58962f385683 = L.circleMarker(
+                [34.727778, -86.583889],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_8acd240e9516dce4df9c58962f385683.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6ed5a7cb97d748b6c749901ef3498ad4 = L.polyline(
+                [[34.728889, -86.583611], [34.729167, -86.583611]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_6ed5a7cb97d748b6c749901ef3498ad4.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_92e896fe287dbe7d64126770cc69c31c = L.circleMarker(
+                [34.729167, -86.583611],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_92e896fe287dbe7d64126770cc69c31c.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_bd265e6055226ee9811aff33b9ba812a = L.polyline(
+                [[34.729167, -86.583611], [34.729167, -86.583611]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_bd265e6055226ee9811aff33b9ba812a.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6cb27a11e47bb366948f9470130f80ae = L.circleMarker(
+                [34.729167, -86.583611],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_6cb27a11e47bb366948f9470130f80ae.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_90fddc6080180b0897eb8f2c19fb78e7 = L.polyline(
+                [[34.729167, -86.582778], [34.729722, -86.5825]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_90fddc6080180b0897eb8f2c19fb78e7.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_de2419b1841272effe01545c10e84753 = L.circleMarker(
+                [34.729722, -86.5825],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_de2419b1841272effe01545c10e84753.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_442c6ade8d62ae69e855ab429b8fd99f = L.polyline(
+                [[34.735556, -86.565278], [34.735278, -86.565556]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_442c6ade8d62ae69e855ab429b8fd99f.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a854fe26dbfdab48236c993b0a604f9e = L.circleMarker(
+                [34.735278, -86.565556],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_a854fe26dbfdab48236c993b0a604f9e.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_948c3deee6654417503d525249b88a7a = L.polyline(
+                [[34.735556, -86.572222], [34.735556, -86.572778]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_948c3deee6654417503d525249b88a7a.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c8199d90eae5cf25ea85fecf7990602d = L.circleMarker(
+                [34.735556, -86.572778],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_c8199d90eae5cf25ea85fecf7990602d.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c6f3548b3232b829b7d6446f6fa501dc = L.polyline(
+                [[40.01694, -83.01194], [40.01694, -83.01194]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_c6f3548b3232b829b7d6446f6fa501dc.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_21d9c57138f1dbd4afe0bae29bb0916d = L.circleMarker(
+                [40.01694, -83.01194],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_21d9c57138f1dbd4afe0bae29bb0916d.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3b9b2c57ffbbed071c1a5b46442935bc = L.polyline(
+                [[40.01111, -83.01055], [40.01083, -83.01027]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_3b9b2c57ffbbed071c1a5b46442935bc.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e348b2ce3b5379caba1972e675a5c72c = L.circleMarker(
+                [40.01083, -83.01027],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_e348b2ce3b5379caba1972e675a5c72c.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_70afe6b455fa9e59bdd9cba2bd98ea14 = L.polyline(
+                [[40.01083, -83.01027], [40.01055, -83.01027]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_70afe6b455fa9e59bdd9cba2bd98ea14.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_88ce52646b6d5bc17681f7b4b3b0ee2c = L.circleMarker(
+                [40.01055, -83.01027],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_88ce52646b6d5bc17681f7b4b3b0ee2c.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_bf574c24bb0367081989d10e4aedfb25 = L.polyline(
+                [[40.01056, -83.01028], [40.01028, -83.01028]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_bf574c24bb0367081989d10e4aedfb25.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1725f1cb972d051862a75b0a969d812c = L.circleMarker(
+                [40.01028, -83.01028],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_1725f1cb972d051862a75b0a969d812c.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5381e014feacdad015ead4b494ec1bfe = L.polyline(
+                [[40.00833, -83.00972], [40.00806, -83.00972]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_5381e014feacdad015ead4b494ec1bfe.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c8292d1e76f0801c6c1d754393b94dd6 = L.circleMarker(
+                [40.00806, -83.00972],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_c8292d1e76f0801c6c1d754393b94dd6.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c2172945a71ecb43555e8041ffb4175b = L.polyline(
+                [[40.006667, -83.009167], [40.006389, -83.009167]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_c2172945a71ecb43555e8041ffb4175b.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_47a891d458637dbbde0fd838544444fe = L.circleMarker(
+                [40.006389, -83.009167],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_47a891d458637dbbde0fd838544444fe.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_79ec7413ab2029e9a539ccc8d73f4fd0 = L.polyline(
+                [[40.006389, -83.009167], [40.006111, -83.009167]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            poly_line_79ec7413ab2029e9a539ccc8d73f4fd0.bindTooltip(
+                `<div>
+                     Event Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_25984c338647e86357d0beb8f83a01e5 = L.circleMarker(
+                [40.006111, -83.009167],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+        
+    
+            circle_marker_25984c338647e86357d0beb8f83a01e5.bindTooltip(
+                `<div>
+                     End Point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            map_cd47109eb67904e6f9881835cf3d2a2d.fitBounds(
+                [[40.141111, -82.9825], [40.141111, -82.981389], [40.1411, -82.9814], [40.1411, -82.9814], [40.141389, -82.976944], [40.141389, -82.976667], [40.141389, -82.975556], [40.141389, -82.975], [40.141667, -82.972778], [40.141667, -82.9725], [40.141944, -82.970278], [40.141944, -82.969722], [39.994444, -83.001944], [39.994444, -83.001944], [39.9944, -83.0019], [39.9944, -83.0019], [39.9944, -83.0], [39.9944, -83.0], [39.9944, -83.0], [39.9944, -83.0], [39.9944, -82.9997], [39.9944, -82.9994], [39.999722, -82.996944], [39.999722, -82.996667], [34.735556, -86.575278], [34.735556, -86.575278], [34.736389, -86.576111], [34.736389, -86.576111], [34.735556, -86.578056], [34.735556, -86.578056], [34.735, -86.579167], [34.734722, -86.579444], [34.727222, -86.586389], [34.726944, -86.586111], [34.726944, -86.586389], [34.726944, -86.586111], [34.726667, -86.585556], [34.726944, -86.585], [34.7275, -86.584444], [34.727778, -86.583889], [34.728889, -86.583611], [34.729167, -86.583611], [34.729167, -86.583611], [34.729167, -86.583611], [34.729167, -86.582778], [34.729722, -86.5825], [34.735556, -86.565278], [34.735278, -86.565556], [34.735556, -86.572222], [34.735556, -86.572778], [40.01694, -83.01194], [40.01694, -83.01194], [40.01111, -83.01055], [40.01083, -83.01027], [40.01083, -83.01027], [40.01055, -83.01027], [40.01056, -83.01028], [40.01028, -83.01028], [40.00833, -83.00972], [40.00806, -83.00972], [40.006667, -83.009167], [40.006389, -83.009167], [40.006389, -83.009167], [40.006111, -83.009167]],
+                {}
+            );
+        
+    
+            var layer_control_e847b5977b67d2b6ede52c4554bbccc4_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_ec3baa93c77a7823bd190fead3f261d0,
+                },
+                overlays :  {
+                    "macro_element_598e99136645304bdc1aed11bab9214d" : marker_cluster_598e99136645304bdc1aed11bab9214d,
+                },
+            };
+            let layer_control_e847b5977b67d2b6ede52c4554bbccc4 = L.control.layers(
+                layer_control_e847b5977b67d2b6ede52c4554bbccc4_layers.base_layers,
+                layer_control_e847b5977b67d2b6ede52c4554bbccc4_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_cd47109eb67904e6f9881835cf3d2a2d);
+
+        
+</script>
+</html>
