@@ -121,20 +121,17 @@ function App() {
     );
 
     if (activeEvents.length > 0) {
-      const isSelectedStillActive = activeEvents.some(f => f.properties.id === selectedId);
-
-      if (!isSelectedStillActive) {
-        // --- FIX: Only auto-select if user is actively PLAYING ---
-        // If simply scrubbing or loading, we do NOT auto-select.
-        if (isPlaying) {
-          setSelectedId(activeEvents[0].properties.id);
+      if (isPlaying) {
+        // Auto-select the most recently started event
+        const latestEvent = activeEvents[activeEvents.length - 1];
+        if (selectedId !== latestEvent.properties.id) {
+          setSelectedId(latestEvent.properties.id);
         }
       }
     } else {
-      // If time passes and no event is active, clear the selection
       setSelectedId(null);
     }
-  }, [currentTime, data, isPlaying]); // Added isPlaying dependency
+  }, [currentTime, data, isPlaying]);
 
   useEffect(() => {
     if (isPlaying) {
