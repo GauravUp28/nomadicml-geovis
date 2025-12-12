@@ -15,7 +15,7 @@ API_KEY = os.getenv("NOMADIC_API_KEY")
 
 app = FastAPI()
 
-# Enable CORS (Allowed for local dev, stricter in prod)
+# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -54,13 +54,10 @@ def timestamp_to_seconds(time_str: str) -> int:
     except:
         return 0
 
-# Update this helper to handle optional inputs safely
 def convert_to_iso_time(time_str: str, default_duration_sec: int = 0) -> int:
-    """Returns timestamp in milliseconds."""
     try:
         if not time_str: return 0
         seconds = timestamp_to_seconds(time_str)
-        # Base date: 2025-01-01 12:00:00
         base_time = datetime(2025, 1, 1, 12, 0, 0)
         event_time = base_time + timedelta(seconds=seconds + default_duration_sec)
         return int(event_time.timestamp() * 1000)
@@ -76,12 +73,14 @@ async def get_geojson_data(request: BatchRequest):
         
         client = NomadicML(api_key=API_KEY)
         
-        # ... (Keep Fetch Logic same as before) ...
+        # 1. Fetch from SDK
+        print(f"Fetching batch {request.batchId} (Filter: {request.filter})")
         if request.filter and request.filter.lower() != "all":
             raw_data = client.get_batch_analysis(request.batchId, filter=request.filter.lower())
         else:
             raw_data = client.get_batch_analysis(request.batchId)
         
+        # 2. Transform to GeoJSON
         features = []
         
         for result in raw_data.get('results', []):
@@ -98,14 +97,11 @@ async def get_geojson_data(request: BatchRequest):
                 except:
                     continue
 
-                # --- NEW TIME LOGIC ---
+                # Time Logic
                 t_start_str = event.get('t_start')
                 t_end_str = event.get('t_end')
 
-                # Convert Start Time
                 ts_start = convert_to_iso_time(t_start_str)
-                
-                # Convert End Time (Fallback to Start + 5s if missing)
                 if t_end_str and t_end_str != t_start_str:
                     ts_end = convert_to_iso_time(t_end_str)
                 else:
@@ -116,15 +112,15 @@ async def get_geojson_data(request: BatchRequest):
                     "severity": event.get('severity', 'low'),
                     "status": event.get('approval', 'Unknown'),
                     "time_str": t_start_str,
-                    "timestamp": ts_start,      # START
-                    "timestamp_end": ts_end,    # END
+                    "timestamp": ts_start,
+                    "timestamp_end": ts_end,
                     "description": event.get('aiAnalysis'),
                     "video_url": video_url,
                     "video_offset": timestamp_to_seconds(t_start_str),
                     "is_moving": (lat_start != lat_end)
                 }
 
-                # ... (Keep Feature creation logic same as before) ...
+                # Create Point Feature
                 features.append({
                     "type": "Feature",
                     "geometry": {
@@ -134,6 +130,7 @@ async def get_geojson_data(request: BatchRequest):
                     "properties": {**props, "type": "point"}
                 })
 
+                # Create Path Feature (if moving)
                 if props["is_moving"]:
                     features.append({
                         "type": "Feature",
@@ -158,7 +155,6 @@ if os.path.exists(client_dist_path):
     app.mount("/", StaticFiles(directory=client_dist_path, html=True), name="static")
 else:
     print(f"⚠️ WARNING: React build not found at '{client_dist_path}'.")
-    print("👉 Did you run 'npm run build' inside the 'nomadic-client' folder?")
 
 if __name__ == "__main__":
     import uvicorn
