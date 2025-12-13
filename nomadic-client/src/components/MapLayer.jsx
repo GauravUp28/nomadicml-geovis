@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CircleMarker, Popup, Polyline } from 'react-leaflet';
 import { SEVERITY_COLORS, STATUS_COLORS } from '../utils';
 
-const EventMarker = ({ feature, isSelected }) => {
+const EventMarker = ({ feature, isSelected, onMarkerClick }) => {
   const markerRef = useRef(null);
-  const [videoUrl, setVideoUrl] = useState(null); // State for the fresh URL
+  const [videoUrl, setVideoUrl] = useState(null);
   const p = feature.properties;
   
   const position = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
@@ -19,9 +19,7 @@ const EventMarker = ({ feature, isSelected }) => {
     }
   }, [isSelected]);
 
-  // Fetch fresh video URL when selected
   useEffect(() => {
-    // Only fetch if selected and we don't have a URL yet, or if it's a different video
     if (isSelected && !videoUrl && p.video_id) {
       const fetchVideo = async () => {
         try {
@@ -41,7 +39,6 @@ const EventMarker = ({ feature, isSelected }) => {
       };
       fetchVideo();
     } else if (isSelected && !videoUrl && !p.video_id && p.video_url) {
-      // Fallback if no video_id exists (legacy support)
       setVideoUrl(p.video_url);
     }
   }, [isSelected, p.video_id, p.video_url, videoUrl]);
@@ -52,6 +49,9 @@ const EventMarker = ({ feature, isSelected }) => {
       center={position}
       radius={8}
       pathOptions={{ color: 'white', weight: 2, fillColor: severityColor, fillOpacity: 1 }}
+      eventHandlers={{
+        click: () => onMarkerClick(p.id, p.timestamp),
+      }}
     >
       <Popup minWidth={320}>
         <div className="font-sans">
@@ -100,18 +100,15 @@ const EventMarker = ({ feature, isSelected }) => {
   );
 };
 
-const MapLayer = ({ data, currentTime, showAll, selectedId }) => {
+const MapLayer = ({ data, currentTime, showAll, selectedId, onMarkerClick }) => {
   
   const visibleFeatures = data.features
     .filter(f => {
       if (showAll) return true;
-
       const p = f.properties;
-      
       if (selectedId) {
         return p.id === selectedId;
       }
-
       return currentTime >= p.timestamp && currentTime <= p.timestamp_end;
     })
     .sort((a, b) => a.properties.timestamp - b.properties.timestamp);
@@ -149,6 +146,7 @@ const MapLayer = ({ data, currentTime, showAll, selectedId }) => {
               key={`point-${idx}`}
               feature={feature}
               isSelected={p.id === selectedId}
+              onMarkerClick={onMarkerClick}
             />
           );
         }

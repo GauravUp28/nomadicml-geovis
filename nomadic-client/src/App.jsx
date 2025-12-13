@@ -37,7 +37,7 @@ function App() {
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [playbackSpeed, setPlaybackSpeed] = useState(2);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [hasInteracted, setHasInteracted] = useState(false);
 
   // Initialize as null so no event is selected by default
@@ -192,6 +192,7 @@ function App() {
                 currentTime={currentTime}
                 showAll={!hasInteracted}
                 selectedId={selectedId}
+                onMarkerClick={handleEventClick}
               />
             )}
 
