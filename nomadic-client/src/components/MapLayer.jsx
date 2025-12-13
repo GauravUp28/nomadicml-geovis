@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CircleMarker, Popup, Polyline } from 'react-leaflet';
 import { SEVERITY_COLORS, STATUS_COLORS } from '../utils';
 
 const EventMarker = ({ feature, isSelected }) => {
   const markerRef = useRef(null);
-
+  const [videoUrl, setVideoUrl] = useState(null); // State for the fresh URL
   const p = feature.properties;
+  
   const position = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
   
   const statusKey = p.status ? p.status.toLowerCase() : 'unknown';
@@ -14,10 +15,36 @@ const EventMarker = ({ feature, isSelected }) => {
 
   useEffect(() => {
     if (isSelected && markerRef.current) {
-      // Just open the popup, do not move the map
       markerRef.current.openPopup();
     }
   }, [isSelected]);
+
+  // Fetch fresh video URL when selected
+  useEffect(() => {
+    // Only fetch if selected and we don't have a URL yet, or if it's a different video
+    if (isSelected && !videoUrl && p.video_id) {
+      const fetchVideo = async () => {
+        try {
+          const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+          const res = await fetch(`${API_URL}/api/video-url`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ videoId: p.video_id })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            setVideoUrl(data.url);
+          }
+        } catch (err) {
+          console.error("Failed to fetch fresh video URL:", err);
+        }
+      };
+      fetchVideo();
+    } else if (isSelected && !videoUrl && !p.video_id && p.video_url) {
+      // Fallback if no video_id exists (legacy support)
+      setVideoUrl(p.video_url);
+    }
+  }, [isSelected, p.video_id, p.video_url, videoUrl]);
 
   return (
     <CircleMarker
@@ -43,21 +70,23 @@ const EventMarker = ({ feature, isSelected }) => {
             <span>⚠️ <b style={{ color: severityColor }}>{p.severity.toUpperCase()}</b></span>
           </div>
 
-          {p.video_url && (
-            <div className="bg-black rounded-lg overflow-hidden mb-3 border border-slate-200">
+          <div className="bg-black rounded-lg overflow-hidden mb-3 border border-slate-200 min-h-[180px] flex items-center justify-center relative">
+            {videoUrl ? (
               <video 
-                key={`${p.video_url}-${p.video_offset}`} 
+                key={`${videoUrl}-${p.video_offset}`} 
                 width="100%" 
                 controls 
                 className="block"
                 autoPlay={false} 
                 preload="metadata"
               >
-                <source src={`${p.video_url}#t=${p.video_offset}`} type="video/mp4" />
+                <source src={`${videoUrl}#t=${p.video_offset}`} type="video/mp4" />
                 Your browser does not support video.
               </video>
-            </div>
-          )}
+            ) : (
+               <div className="text-white text-xs">Loading Video...</div>
+            )}
+          </div>
 
           <div 
             className="bg-slate-50 p-3 rounded-md text-xs text-slate-700 leading-relaxed border-l-4"

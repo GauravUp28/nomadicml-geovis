@@ -30,11 +30,15 @@ class BatchRequest(BaseModel):
     batchId: str
     filter: Optional[str] = "all"
 
+class VideoRequest(BaseModel):
+    videoId: str
+
 # --- Helpers ---
 VIDEO_CACHE = {}
 
-def get_signed_video_url(video_id: str) -> str:
-    if video_id in VIDEO_CACHE: return VIDEO_CACHE[video_id]
+def get_signed_video_url(video_id: str, force_refresh: bool = False) -> str:
+    if not force_refresh and video_id in VIDEO_CACHE: 
+        return VIDEO_CACHE[video_id]
     
     url = f"https://api-prod.nomadicml.com/api/video/{video_id}/signed-url"
     headers = {"x-api-key": API_KEY}
@@ -45,7 +49,8 @@ def get_signed_video_url(video_id: str) -> str:
         if data.get("url"):
             VIDEO_CACHE[video_id] = data["url"]
             return data["url"]
-    except:
+    except Exception as e:
+        print(f"Error fetching video URL: {e}")
         return None
 
 def timestamp_to_seconds(time_str: str) -> int:
@@ -86,6 +91,7 @@ async def get_geojson_data(request: BatchRequest):
         
         for result in raw_data.get('results', []):
             vid_id = result.get('video_id')
+            # Initial fetch (cached if possible)
             video_url = get_signed_video_url(vid_id)
             
             for event in result.get('events', []):
@@ -117,6 +123,7 @@ async def get_geojson_data(request: BatchRequest):
                     "timestamp": ts_start,
                     "timestamp_end": ts_end,
                     "description": event.get('aiAnalysis'),
+                    "video_id": vid_id,  # Ensure frontend has this ID
                     "video_url": video_url,
                     "video_offset": timestamp_to_seconds(t_start_str),
                     "is_moving": (lat_start != lat_end)
@@ -149,8 +156,19 @@ async def get_geojson_data(request: BatchRequest):
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/api/video-url")
+async def refresh_video_url(request: VideoRequest):
+    """Fetches a fresh signed URL for a specific video ID."""
+    try:
+        # Force refresh to get a new signature
+        url = get_signed_video_url(request.videoId, force_refresh=True)
+        if not url:
+            raise HTTPException(status_code=404, detail="Video not found")
+        return {"url": url}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 # --- Serve React Frontend ---
-# This looks for the 'dist' folder inside 'nomadic-client'
 client_dist_path = "nomadic-client/dist"
 
 if os.path.exists(client_dist_path):

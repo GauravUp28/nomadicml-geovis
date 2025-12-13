@@ -89,9 +89,6 @@ function App() {
         setCurrentTime(start);
         setData(geoJson);
         addToHistory(batchId);
-
-        // --- FIX: DO NOT SET selectedId HERE ---
-        // By leaving this out, the map loads without popping up any video.
       } else {
         alert("No events found.");
       }
