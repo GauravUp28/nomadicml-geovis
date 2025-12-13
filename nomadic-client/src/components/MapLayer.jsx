@@ -77,7 +77,6 @@ const EventMarker = ({ feature, isSelected, onMarkerClick }) => {
                 width="100%" 
                 controls 
                 className="block"
-                autoPlay={false} 
                 preload="metadata"
               >
                 <source src={`${videoUrl}#t=${p.video_offset}`} type="video/mp4" />
@@ -100,15 +99,12 @@ const EventMarker = ({ feature, isSelected, onMarkerClick }) => {
   );
 };
 
-const MapLayer = ({ data, currentTime, showAll, selectedId, onMarkerClick }) => {
+const MapLayer = ({ data, currentTime, showAll, selectedId, onMarkerClick, isPlaying }) => {
   
   const visibleFeatures = data.features
     .filter(f => {
-      if (showAll) return true;
+      if (!isPlaying) return true;
       const p = f.properties;
-      if (selectedId) {
-        return p.id === selectedId;
-      }
       return currentTime >= p.timestamp && currentTime <= p.timestamp_end;
     })
     .sort((a, b) => a.properties.timestamp - b.properties.timestamp);
@@ -131,7 +127,7 @@ const MapLayer = ({ data, currentTime, showAll, selectedId, onMarkerClick }) => 
               />
               <CircleMarker
                 center={endPos}
-                radius={5}
+                radius={3}
                 pathOptions={{ color: '#333', weight: 1, fillColor: color, fillOpacity: 1 }}
               >
                  <Popup>End of Event</Popup>

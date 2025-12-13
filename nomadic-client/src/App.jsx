@@ -193,6 +193,7 @@ function App() {
                 showAll={!hasInteracted}
                 selectedId={selectedId}
                 onMarkerClick={handleEventClick}
+                isPlaying={isPlaying}
               />
             )}
 
