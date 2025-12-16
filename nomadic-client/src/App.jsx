@@ -1,16 +1,114 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { MapContainer, TileLayer, LayersControl, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+
+// --- Fix for Leaflet-Draw in Vite/React ---
+import 'leaflet-draw/dist/leaflet.draw.css';
+import 'leaflet-draw';
+window.L = L; // Important: Helper to ensure leaflet-draw finds the L namespace
+// ------------------------------------------
+
 import MapLayer from './components/MapLayer';
 import TimelineControls from './components/TimelineControls';
 import EventGrid from './components/EventGrid';
 import HeatmapLayer from './components/HeatmapLayer'; 
 import { Flame, Search, X, Loader2 } from 'lucide-react';
 
-const AutoFitBounds = ({ data }) => {
+// --- Custom Draw Control Component ---
+const DrawControl = React.memo(({ onCreated, onDeleted, onEdited }) => {
+  const map = useMap();
+  const drawnItemsRef = useRef(new L.FeatureGroup());
+
+  useEffect(() => {
+    const drawnItems = drawnItemsRef.current;
+    map.addLayer(drawnItems);
+
+    // Initialize the Draw Control
+    const drawControl = new L.Control.Draw({
+      edit: {
+        featureGroup: drawnItems,
+        remove: true,
+        edit: {}, // Enable Edit Mode
+      },
+      draw: {
+        marker: false,
+        circlemarker: false,
+        polyline: false,
+        polygon: true,    // Enable Polygon
+        rectangle: false, // Disable Rectangle (Buggy in some versions)
+        circle: true,     // Enable Circle
+      },
+    });
+
+    map.addControl(drawControl);
+
+    // Event Handlers
+    const handleCreated = (e) => {
+      const layer = e.layer;
+      drawnItems.clearLayers(); // Single shape mode
+      drawnItems.addLayer(layer);
+      if (onCreated) onCreated(layer);
+    };
+
+    const handleDeleted = () => {
+      if (onDeleted) onDeleted();
+    };
+
+    const handleEdited = () => {
+      if (onEdited) onEdited();
+    };
+
+    map.on(L.Draw.Event.CREATED, handleCreated);
+    map.on(L.Draw.Event.DELETED, handleDeleted);
+    map.on(L.Draw.Event.EDITED, handleEdited);
+
+    return () => {
+      map.removeControl(drawControl);
+      map.removeLayer(drawnItems);
+      map.off(L.Draw.Event.CREATED, handleCreated);
+      map.off(L.Draw.Event.DELETED, handleDeleted);
+      map.off(L.Draw.Event.EDITED, handleEdited);
+    };
+  }, [map, onCreated, onDeleted, onEdited]);
+
+  return null;
+});
+
+// --- Geometry Helper ---
+const isPointInLayer = (lat, lng, layer) => {
+  if (!layer) return true;
+  
+  // 1. Precise Circle Check (Distance <= Radius in meters)
+  if (layer instanceof L.Circle) {
+    const center = layer.getLatLng();
+    const radius = layer.getRadius();
+    return center.distanceTo([lat, lng]) <= radius;
+  }
+  
+  // 2. Polygon Check (Ray-Casting Algorithm)
+  if (layer instanceof L.Polygon) {
+    const poly = layer.getLatLngs()[0]; // Assumes simple polygon
+    let inside = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+        const xi = poly[i].lat, yi = poly[i].lng;
+        const xj = poly[j].lat, yj = poly[j].lng;
+        const intersect = ((yi > lng) !== (yj > lng)) &&
+            (lat < (xj - xi) * (lng - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+    }
+    return inside;
+  }
+  return true;
+};
+
+// --- Auto Fit Bounds (Smart Version) ---
+const AutoFitBounds = ({ data, disableZoom }) => {
   const map = useMap();
   useEffect(() => {
+    // Don't auto-zoom if the user is actively using a spatial filter
+    if (disableZoom) return; 
+
     if (!data || !data.features || data.features.length === 0) return;
     const latLngs = [];
     data.features.forEach(f => {
@@ -24,8 +122,17 @@ const AutoFitBounds = ({ data }) => {
       const bounds = L.latLngBounds(latLngs);
       map.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
     }
-  }, [data, map]);
+  }, [data, map, disableZoom]);
   return null;
+};
+
+const filterFeaturesBySpatialLayer = (features, layer) => {
+  if (!layer) return features;
+  return features.filter(f => {
+    if (f.geometry.type !== 'Point') return false;
+    const [lng, lat] = f.geometry.coordinates;
+    return isPointInLayer(lat, lng, layer);
+  });
 };
 
 function App() {
@@ -34,9 +141,15 @@ function App() {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [filteredData, setFilteredData] = useState(null);
+  
+  // 1. Filtered Data (Batch + AI Search)
+  const [filteredData, setFilteredData] = useState(null); 
+  const [searchResults, setSearchResults] = useState(null); // cache latest AI search IDs
+  
+  const [spatialLayer, setSpatialLayer] = useState(null);
+  const [shapeVersion, setShapeVersion] = useState(0); 
 
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(null); // Raw Batch Data
   const [loading, setLoading] = useState(false);
   const [recentBatches, setRecentBatches] = useState([]);
   const [showHeatmap, setShowHeatmap] = useState(false);
@@ -65,12 +178,54 @@ function App() {
     localStorage.setItem('nomadic_batch_history', JSON.stringify(newHistory));
   };
 
+  // --- Stable Handlers (Prevents Flicker on Search) ---
+  const onCreated = useCallback((layer) => {
+    setSpatialLayer(layer);
+    setShapeVersion(v => v + 1);
+  }, []);
+
+  const onDeleted = useCallback(() => {
+    setSpatialLayer(null);
+    setShapeVersion(v => v + 1);
+  }, []);
+
+  const onEdited = useCallback(() => {
+    setShapeVersion(v => v + 1);
+  }, []);
+
+  // --- Compute Final Data (Batch + Search + Spatial) ---
+  const displayedData = useMemo(() => {
+    if (!filteredData) return null;
+    
+    // If no spatial filter, return search results as is
+    if (!spatialLayer) return filteredData;
+
+    // INTERSECTION LOGIC: Search Results AND Spatial Filter
+    const visibleIds = new Set();
+    filteredData.features.forEach(f => {
+        if (f.geometry.type === 'Point') {
+            const [lng, lat] = f.geometry.coordinates;
+            if (isPointInLayer(lat, lng, spatialLayer)) {
+                visibleIds.add(f.properties.id);
+            }
+        }
+    });
+
+    // Filter the features
+    const features = filteredData.features.filter(f => visibleIds.has(f.properties.id));
+    return { ...filteredData, features };
+
+  }, [filteredData, spatialLayer, shapeVersion]);
+
+
   const handleVisualize = async () => {
     if (!batchId) return alert("Please enter a Batch ID");
     setLoading(true);
     setHasInteracted(false);
     setSelectedId(null);
     setSearchQuery('');
+    setSpatialLayer(null); 
+    setShapeVersion(0);
 
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -107,7 +262,10 @@ function App() {
 
   useEffect(() => {
     if (!searchQuery.trim()) {
-        if (data) setFilteredData(data);
+        if (data) {
+          setFilteredData(data);
+          setSearchResults(null);
+        }
         return;
     }
 
@@ -124,12 +282,12 @@ function App() {
             
             if (res.ok) {
                 const { matching_ids } = await res.json();
-                
-                const matches = data.features.filter(f => 
-                    matching_ids.includes(f.properties.id)
-                );
-                
-                setFilteredData({ ...data, features: matches });
+
+                const matches = data.features.filter(f => matching_ids.includes(f.properties.id));
+                const spatiallyFiltered = filterFeaturesBySpatialLayer(matches, spatialLayer);
+
+                setSearchResults(matching_ids);
+                setFilteredData({ ...data, features: spatiallyFiltered });
             }
         } catch (err) {
             console.error("AI Search Failed", err);
@@ -140,6 +298,27 @@ function App() {
 
     return () => clearTimeout(delaySearch);
   }, [searchQuery, data, batchId]);
+
+  // Keep filtered data in sync with the drawn region without re-hitting AI search
+  useEffect(() => {
+    if (!data) return;
+
+    if (!searchQuery.trim()) {
+      if (!spatialLayer) {
+        setFilteredData(data);
+      } else {
+        const spatiallyFiltered = filterFeaturesBySpatialLayer(data.features, spatialLayer);
+        setFilteredData({ ...data, features: spatiallyFiltered });
+      }
+      return;
+    }
+
+    if (searchResults) {
+      const matches = data.features.filter(f => searchResults.includes(f.properties.id));
+      const spatiallyFiltered = filterFeaturesBySpatialLayer(matches, spatialLayer);
+      setFilteredData({ ...data, features: spatiallyFiltered });
+    }
+  }, [spatialLayer, shapeVersion, data, searchQuery, searchResults]);
 
   const handleEventClick = (id, time) => {
     if (showHeatmap) setShowHeatmap(false);
@@ -154,8 +333,8 @@ function App() {
   };
 
   useEffect(() => {
-    if (!filteredData) return;
-    const activeEvents = filteredData.features.filter(f =>
+    if (!displayedData) return;
+    const activeEvents = displayedData.features.filter(f =>
       currentTime >= f.properties.timestamp &&
       currentTime <= f.properties.timestamp_end
     );
@@ -168,7 +347,7 @@ function App() {
     } else if (activeEvents.length === 0) {
       setSelectedId(null);
     }
-  }, [currentTime, filteredData, isPlaying]); 
+  }, [currentTime, displayedData, isPlaying]); 
 
   useEffect(() => {
     if (isPlaying) {
@@ -187,17 +366,17 @@ function App() {
     return () => clearInterval(playInterval.current);
   }, [isPlaying, endTime, startTime, playbackSpeed]);
 
-  const eventList = filteredData ? filteredData.features.filter(f => f.geometry.type === 'Point') : [];
+  const eventList = displayedData ? displayedData.features.filter(f => f.geometry.type === 'Point') : [];
 
   const getHeatmapData = () => {
-    if (!filteredData) return null;
+    if (!displayedData) return null;
     if (isPlaying || hasInteracted) {
        return {
-         ...filteredData,
-         features: filteredData.features.filter(f => f.properties.timestamp <= currentTime)
+         ...displayedData,
+         features: displayedData.features.filter(f => f.properties.timestamp <= currentTime)
        };
     }
-    return filteredData;
+    return displayedData;
   };
   
   const heatmapData = getHeatmapData();
@@ -226,7 +405,7 @@ function App() {
               placeholder="Batch ID..." 
             />
             
-            {/* SEARCH BAR (AI ENABLED) */}
+            {/* SEARCH BAR (Context Aware) */}
             <div className="flex-1 relative group">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                 {isSearching ? <Loader2 size={16} className="animate-spin text-blue-500" /> : <Search size={16} />}
@@ -234,8 +413,11 @@ function App() {
               <input 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder='AI Search (e.g. "red car right lane")...'
-                className="w-full border border-slate-300 rounded-lg pl-10 pr-8 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                // Dynamic Placeholder to indicate Spatial Context
+                placeholder={spatialLayer ? 'Search within selected area...' : 'AI Search (e.g. "red car")...'}
+                className={`w-full border rounded-lg pl-10 pr-8 py-2 text-sm outline-none focus:ring-2 transition-all ${
+                    spatialLayer ? 'border-blue-400 bg-blue-50 ring-blue-200' : 'border-slate-300 focus:ring-blue-500'
+                }`}
                 disabled={!data}
               />
               {searchQuery && (
@@ -285,13 +467,20 @@ function App() {
               <LayersControl.BaseLayer name="Satellite"><TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution='Esri' /></LayersControl.BaseLayer>
             </LayersControl>
 
-            {filteredData && (
+            {/* --- Draw Control --- */}
+            <DrawControl 
+              onCreated={onCreated} 
+              onDeleted={onDeleted} 
+              onEdited={onEdited} 
+            />
+
+            {displayedData && (
               <>
                 {showHeatmap ? (
                   <HeatmapLayer data={heatmapData} />
                 ) : (
                   <MapLayer
-                    data={filteredData}
+                    data={displayedData}
                     currentTime={currentTime}
                     showAll={!hasInteracted && !isPlaying}
                     selectedId={selectedId}
@@ -302,10 +491,11 @@ function App() {
               </>
             )}
 
-            {filteredData && <AutoFitBounds data={filteredData} />}
+            {/* Disable auto-zoom if spatial filter is active (keeps user context) */}
+            {displayedData && <AutoFitBounds data={displayedData} disableZoom={!!spatialLayer} />}
           </MapContainer>
           
-          {filteredData && !showHeatmap && (
+          {displayedData && !showHeatmap && (
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[90%] z-[1000]">
               <TimelineControls
                 startTime={startTime} endTime={endTime} currentTime={currentTime} isPlaying={isPlaying}
@@ -319,7 +509,7 @@ function App() {
           )}
         </div>
         
-        {filteredData && (
+        {displayedData && (
           <div className="w-[350px] shrink-0 h-full relative transition-all duration-300 ease-in-out border-l border-slate-200">
             <EventGrid
               events={eventList}
