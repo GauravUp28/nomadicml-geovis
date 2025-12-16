@@ -22,3 +22,27 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# --- Dependencies ---
+node_modules/
+/nomadic-client/node_modules/
+venv/
+__pycache__/
+*.py[cod]
+
+# --- Environment Variables (Secrets) ---
+.env
+
+# --- Build Outputs ---
+/nomadic-client/dist/
+/output/
+
+# --- System Files ---
+.DS_Store
+.vscode/
+
+# --- Data ---
+# We generally ignore CSVs, BUT we will allow your mock data
+# so the demo works for others.
+*.csv
+!nomadic_data_5_csv.csv
