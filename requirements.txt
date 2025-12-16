@@ -7,3 +7,5 @@ python-dotenv
 nomadicml
 pydantic
 python-multipart
+sentence-transformers
+torch
