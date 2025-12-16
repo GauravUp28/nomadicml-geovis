@@ -136,8 +136,16 @@ const filterFeaturesBySpatialLayer = (features, layer) => {
 };
 
 function App() {
-  const [batchId, setBatchId] = useState('');
+  const initialParams = useMemo(() => new URLSearchParams(window.location.search), []);
+
+  const [batchId, setBatchId] = useState(() => initialParams.get('batchId') || '');
   const [filter, setFilter] = useState('all');
+  const [geojsonUrlOverride, setGeojsonUrlOverride] = useState(() => initialParams.get('geojsonUrl'));
+  const [apiBaseOverride, setApiBaseOverride] = useState(() => {
+    const value = initialParams.get('apiBase');
+    return value ? value.replace(/\/$/, '') : null;
+  });
+  const [shareTokenOverride, setShareTokenOverride] = useState(() => initialParams.get('shareToken'));
   
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
@@ -227,14 +235,19 @@ function App() {
     setSpatialLayer(null); 
     setShapeVersion(0);
 
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
     try {
-      const res = await fetch(`${API_URL}/api/visualize`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ batchId, filter })
-      });
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const url = geojsonUrlOverride || `${API_URL}/api/visualize`;
+      const res = await fetch(
+        url,
+        geojsonUrlOverride
+          ? { method: 'GET' }
+          : {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ batchId, filter }),
+            }
+      );
       if (!res.ok) throw new Error((await res.json()).detail);
       const geoJson = await res.json();
 
@@ -259,6 +272,14 @@ function App() {
       setLoading(false);
     }
   };
+
+  // Auto-load if we were provided a geojsonUrl (deep-link)
+  useEffect(() => {
+    if (geojsonUrlOverride && batchId) {
+      handleVisualize();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geojsonUrlOverride, batchId]);
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -474,22 +495,25 @@ function App() {
               onEdited={onEdited} 
             />
 
-            {displayedData && (
-              <>
-                {showHeatmap ? (
-                  <HeatmapLayer data={heatmapData} />
-                ) : (
-                  <MapLayer
-                    data={displayedData}
-                    currentTime={currentTime}
-                    showAll={!hasInteracted && !isPlaying}
-                    selectedId={selectedId}
-                    onMarkerClick={handleEventClick}
-                    isPlaying={isPlaying}
-                  />
-                )}
-              </>
-            )}
+	            {displayedData && (
+	              <>
+	                {showHeatmap ? (
+	                  <HeatmapLayer data={heatmapData} />
+	                ) : (
+	                  <MapLayer
+	                    data={displayedData}
+	                    currentTime={currentTime}
+	                    showAll={!hasInteracted && !isPlaying}
+	                    selectedId={selectedId}
+	                    onMarkerClick={handleEventClick}
+	                    isPlaying={isPlaying}
+	                    apiBaseOverride={apiBaseOverride}
+	                    shareTokenOverride={shareTokenOverride}
+	                    batchId={batchId}
+	                  />
+	                )}
+	              </>
+	            )}
 
             {/* Disable auto-zoom if spatial filter is active (keeps user context) */}
             {displayedData && <AutoFitBounds data={displayedData} disableZoom={!!spatialLayer} />}

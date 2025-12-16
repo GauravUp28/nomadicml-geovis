@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CircleMarker, Popup, Polyline } from 'react-leaflet';
 import { SEVERITY_COLORS, STATUS_COLORS } from '../utils';
 
-const EventMarker = ({ feature, isSelected, onMarkerClick }) => {
+const EventMarker = ({ feature, isSelected, onMarkerClick, apiBaseOverride, shareTokenOverride, batchId }) => {
   const markerRef = useRef(null);
   const [videoUrl, setVideoUrl] = useState(null);
   const p = feature.properties;
@@ -23,6 +23,23 @@ const EventMarker = ({ feature, isSelected, onMarkerClick }) => {
     if (isSelected && !videoUrl && p.video_id) {
       const fetchVideo = async () => {
         try {
+          if (apiBaseOverride) {
+            const res = await fetch(`${apiBaseOverride}/public/video/${p.video_id}/signed-url`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                method: 'GET',
+                share_token: shareTokenOverride || null,
+                batch_id: batchId || null,
+              }),
+            });
+            if (res.ok) {
+              const data = await res.json();
+              setVideoUrl(data.url);
+            }
+            return;
+          }
+
           const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
           const res = await fetch(`${API_URL}/api/video-url`, {
             method: 'POST',
@@ -41,7 +58,7 @@ const EventMarker = ({ feature, isSelected, onMarkerClick }) => {
     } else if (isSelected && !videoUrl && !p.video_id && p.video_url) {
       setVideoUrl(p.video_url);
     }
-  }, [isSelected, p.video_id, p.video_url, videoUrl]);
+  }, [isSelected, p.video_id, p.video_url, videoUrl, apiBaseOverride, shareTokenOverride, batchId]);
 
   return (
     <CircleMarker
@@ -99,7 +116,7 @@ const EventMarker = ({ feature, isSelected, onMarkerClick }) => {
   );
 };
 
-const MapLayer = ({ data, currentTime, showAll, selectedId, onMarkerClick, isPlaying }) => {
+const MapLayer = ({ data, currentTime, showAll, selectedId, onMarkerClick, isPlaying, apiBaseOverride, shareTokenOverride, batchId }) => {
   
   const visibleFeatures = data.features
     .filter(f => {
@@ -143,6 +160,9 @@ const MapLayer = ({ data, currentTime, showAll, selectedId, onMarkerClick, isPla
               feature={feature}
               isSelected={p.id === selectedId}
               onMarkerClick={onMarkerClick}
+              apiBaseOverride={apiBaseOverride}
+              shareTokenOverride={shareTokenOverride}
+              batchId={batchId}
             />
           );
         }
