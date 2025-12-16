@@ -1,8 +1,8 @@
 # NomadicML Geovisualizer 🌍
 
-A geospatial analysis tool built for the **NomadicML**. 
+A geospatial analysis tool built for **NomadicML**.
 
-This application visualizes driving events (anomalies, violations, stops) from the NomadicML SDK on an interactive map. It transforms raw metadata into a visual "Mini-Geoguessr" style interface, allowing users to inspect the spatial context of edge cases with instant video verification.
+It transforms raw batch metadata into a map-ready, "Mini-Geoguessr" experience so you can inspect spatial context and jump straight into the right moment in video.
 
 **Live Demo:** [https://nomadicml-geovis.onrender.com/](https://nomadicml-geovis.onrender.com/)
 
@@ -10,11 +10,10 @@ This application visualizes driving events (anomalies, violations, stops) from t
 
 ## 🚀 Key Features
 
-* **Interactive Map:** Plots event Start and End points using Folium.
-* **Contextual Paths:** Draws travel paths for moving events, color-coded by severity (🔵 Low, 🟠 Medium, 🔴 High).
-* **Video Verification:** Clicking a marker fetches a signed video URL and deep-links the player to the exact timestamp of the event.
-* **Custom Layers:** Toggle between **Light**, **Dark**, and **Satellite** views for better environmental analysis.
-* **Search by Batch:** dynamic loading of data via NomadicML Batch IDs.
+* **Interactive Map:** Plots event start/end points and paths color-coded by severity.
+* **Instant Video Jumps:** Signed URLs deep-link the player to the exact timestamp.
+* **AI Search:** Embed events once per batch and fuzzy-search by text query.
+* **Custom Layers:** Toggle Light, Dark, and Satellite basemaps.
 
 ---
 
@@ -23,7 +22,7 @@ This application visualizes driving events (anomalies, violations, stops) from t
 * **Backend:** Python, FastAPI
 * **Geospatial:** Folium, Leaflet.js
 * **Frontend:** HTML5, TailwindCSS
-* **Deployment:** Render
+* **Embedding:** sentence-transformers (`all-MiniLM-L6-v2`)
 * **SDK:** NomadicML
 
 ---
@@ -32,7 +31,7 @@ This application visualizes driving events (anomalies, violations, stops) from t
 
 1.  **Clone the repository**
     ```bash
-    git clone [https://github.com/GauravUp28/nomadicml-geovis.git](https://github.com/GauravUp28/nomadicml-geovis.git)
+    git clone https://github.com/GauravUp28/nomadicml-geovis.git
     cd nomadicml-geovis
     ```
 
@@ -53,7 +52,15 @@ This application visualizes driving events (anomalies, violations, stops) from t
     ```
 
 5.  **Access the App**
-    Open your browser and navigate to `http://localhost:8000`
+    Open your browser at `http://localhost:8000`
+
+---
+
+## 📡 API Endpoints (local)
+
+- `POST /api/visualize` — body `{ "batchId": "...", "filter": "all" | "<label fragment>" }` → GeoJSON FeatureCollection.
+- `POST /api/ai-search` — body `{ "batchId": "...", "query": "<text>" }` → `{ matching_ids: [...] }`.
+- `POST /api/video-url` — body `{ "videoId": "<id>" }` → `{ url: "<signed-url>" }`.
 
 ---
 
