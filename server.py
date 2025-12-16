@@ -1,9 +1,10 @@
 import os
+import asyncio
 import requests
 import uuid
 import torch
 import pandas as pd
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -81,84 +82,110 @@ def convert_to_iso_time(time_str: str, default_duration_sec: int = 0) -> int:
     except:
         return 0
 
-@app.post("/api/visualize")
-async def get_geojson_data(request: BatchRequest):
-    try:
-        print(f"Loading mock data from CSV for batch {request.batchId}...")
-        
-        if not os.path.exists("nomadic_data_5_csv.csv"):
-            raise HTTPException(404, "nomadic_data_5_csv.csv not found on server")
+# Helper task (Must be defined before use or globally accessible)
+def compute_embeddings_task(batch_id, features):
+    print(f"Background: Computing embeddings for batch {batch_id}...")
+    texts = [
+        f"{f['properties']['label']} {f['properties']['description']} {f['properties']['severity']}"
+        for f in features
+    ]
+    embeddings = model.encode(texts, convert_to_tensor=True)
+    BATCH_EMBEDDINGS[batch_id] = embeddings
+    BATCH_IDS[batch_id] = [f['properties']['id'] for f in features]
+    BATCH_DATA[batch_id] = { "features": features }
 
-        df = pd.read_csv("nomadic_data_5_csv.csv")
+@app.post("/api/visualize")
+async def get_geojson_data(request: BatchRequest, background_tasks: BackgroundTasks):
+    try:
+        if not API_KEY: raise HTTPException(500, "API Key missing")
+        client = NomadicML(api_key=API_KEY)
         
-        if request.filter and request.filter.lower() != "all":
-            df = df[df['Label'].str.contains(request.filter, case=False, na=False)]
+        # 1. Fetch Raw Data (Blocking I/O offloaded to thread)
+        loop = asyncio.get_event_loop()
+        print(f"Fetching batch {request.batchId}...")
+        
+        raw_data = await loop.run_in_executor(
+            None, 
+            lambda: client.get_batch_analysis(
+                request.batchId, 
+                filter=request.filter.lower() if request.filter and request.filter.lower() != "all" else None
+            )
+        )
 
         features = []
-        skipped_count = 0 # Track skipped rows
-        
-        for index, row in df.iterrows():
-            try:
-                # Basic Validation: Ensure Lat/Lon exists
-                if pd.isna(row['Frame Gps Lat Start']) or pd.isna(row['Frame Gps Lon Start']):
-                    skipped_count += 1
-                    continue
+        unique_video_ids = {r.get('video_id') for r in raw_data.get('results', []) if r.get('video_id')}
 
-                lat_start = float(row['Frame Gps Lat Start'])
-                lon_start = float(row['Frame Gps Lon Start'])
-                lat_end = float(row['Frame Gps Lat End'])
-                lon_end = float(row['Frame Gps Lon End'])
-            except ValueError:
-                skipped_count += 1
-                continue 
+        # 2. Parallel Fetch of Signed URLs
+        # We wrap the synchronous 'get_signed_video_url' in run_in_executor so it doesn't block
+        async def fetch_url_safe(vid):
+            url = await loop.run_in_executor(None, lambda: get_signed_video_url(vid))
+            return vid, url
 
-            raw_timestamp = str(row['Timestamp'])
-            t_start_str = raw_timestamp.split('–')[0] if '–' in raw_timestamp else "0:00"
-            ts_start = convert_to_iso_time(t_start_str)
-            ts_end = convert_to_iso_time(t_start_str, default_duration_sec=15)
+        if unique_video_ids:
+            # Run all fetches in parallel
+            url_results = await asyncio.gather(*(fetch_url_safe(vid) for vid in unique_video_ids))
+            url_cache = dict(url_results)
+        else:
+            url_cache = {}
 
-            props = {
-                "id": str(uuid.uuid4()),
-                "label": str(row['Label']),
-                "severity": str(row['Severity']).lower(),
-                "status": "approved",
-                "time_str": t_start_str,
-                "timestamp": ts_start,
-                "timestamp_end": ts_end,
-                "description": f"{row['Category']} - {row['Label']}",
-                "video_id": row['Video ID'],
-                "video_url": row['Share Link'], 
-                "video_offset": timestamp_to_seconds(t_start_str),
-                "is_moving": (lat_start != lat_end)
-            }
+        # 3. Process Results (CPU work)
+        for result in raw_data.get('results', []):
+            vid_id = result.get('video_id')
+            video_url = url_cache.get(vid_id)
+            
+            for event in result.get('events', []):
+                overlay = event.get('overlay', {})
+                try:
+                    lat_start = float(overlay['frame_gps_lat']['start'])
+                    lon_start = float(overlay['frame_gps_lon']['start'])
+                    lat_end = float(overlay['frame_gps_lat']['end'])
+                    lon_end = float(overlay['frame_gps_lon']['end'])
+                except (KeyError, ValueError, TypeError):
+                    continue 
 
-            features.append({
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [lon_start, lat_start] },
-                "properties": {**props, "type": "point"}
-            })
+                t_start_str = event.get('t_start')
+                t_end_str = event.get('t_end')
+                ts_start = convert_to_iso_time(t_start_str)
+                
+                if t_end_str and t_end_str != t_start_str:
+                    ts_end = convert_to_iso_time(t_end_str)
+                else:
+                    ts_end = convert_to_iso_time(t_start_str, default_duration_sec=5)
 
-            if props["is_moving"]:
+                props = {
+                    "id": str(uuid.uuid4()),
+                    "label": event.get('label'),
+                    "severity": event.get('severity', 'low'),
+                    "status": event.get('approval', 'Unknown'),
+                    "time_str": t_start_str,
+                    "timestamp": ts_start,
+                    "timestamp_end": ts_end,
+                    "description": event.get('aiAnalysis'),
+                    "video_id": vid_id, 
+                    "video_url": video_url,
+                    "video_offset": timestamp_to_seconds(t_start_str),
+                    "is_moving": (lat_start != lat_end)
+                }
+
                 features.append({
                     "type": "Feature",
-                    "geometry": { "type": "LineString", "coordinates": [[lon_start, lat_start], [lon_end, lat_end]] },
-                    "properties": {**props, "type": "path"}
+                    "geometry": { "type": "Point", "coordinates": [lon_start, lat_start] },
+                    "properties": {**props, "type": "point"}
                 })
 
-        # REPORT: Check your terminal to see if rows were dropped
-        print(f"✅ Loaded {len(features)} features.")
-        print(f"⚠️ Skipped {skipped_count} rows due to invalid/missing GPS data.")
+                if props["is_moving"]:
+                    features.append({
+                        "type": "Feature",
+                        "geometry": { 
+                            "type": "LineString", 
+                            "coordinates": [[lon_start, lat_start], [lon_end, lat_end]] 
+                        },
+                        "properties": {**props, "type": "path"}
+                    })
 
+        # 4. Offload Embeddings to Background Task
         if features:
-            print(f"Computing embeddings...")
-            texts = [
-                f"{f['properties']['label']} {f['properties']['description']}"
-                for f in features
-            ]
-            embeddings = model.encode(texts, convert_to_tensor=True)
-            BATCH_EMBEDDINGS[request.batchId] = embeddings
-            BATCH_IDS[request.batchId] = [f['properties']['id'] for f in features]
-            BATCH_DATA[request.batchId] = { "features": features }
+            background_tasks.add_task(compute_embeddings_task, request.batchId, features)
 
         return { "type": "FeatureCollection", "features": features }
 
