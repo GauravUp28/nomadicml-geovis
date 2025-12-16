@@ -289,7 +289,7 @@ function App() {
         }
         return;
     }
-
+    /*
     const delaySearch = setTimeout(async () => {
         setIsSearching(true);
         try {
@@ -316,7 +316,60 @@ function App() {
             setIsSearching(false);
         }
     }, 1000);
+    */
 
+    const normalize = (value) =>
+      String(value || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .split(/\s+/)
+        .filter(Boolean);
+
+    const query = searchQuery.trim().toLowerCase();
+    const queryTokens = normalize(query);
+
+    const delaySearch = setTimeout(() => {
+      setIsSearching(true);
+      try {
+        const ids = new Set();
+        const ordered = [];
+
+        const featureList = (data?.features || []).filter(Boolean);
+        for (const feature of featureList) {
+          const props = feature?.properties || {};
+          const id = props.id;
+          if (!id || ids.has(id)) continue;
+
+          const combined = [
+            props.label,
+            props.description,
+            props.ai_analysis,
+            props.category,
+          ].filter(Boolean).join(' ');
+
+          const combinedLower = combined.toLowerCase();
+          const combinedTokens = new Set(normalize(combinedLower));
+
+          const phraseMatch = query.length > 0 && combinedLower.includes(query);
+          const tokenMatch = queryTokens.length > 0 && queryTokens.every((t) => combinedTokens.has(t));
+
+          if (phraseMatch || tokenMatch) {
+            ids.add(id);
+            ordered.push(id);
+          }
+        }
+
+        const matches = featureList.filter((f) => ids.has(f.properties?.id));
+        const spatiallyFiltered = filterFeaturesBySpatialLayer(matches, spatialLayer);
+
+        setSearchResults(ordered);
+        setFilteredData({ ...data, features: spatiallyFiltered });
+      } catch (err) {
+        console.error("Client-side search failed", err);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 250);
     return () => clearTimeout(delaySearch);
   }, [searchQuery, data, batchId]);
 
