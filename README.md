@@ -1,96 +1,244 @@
-# NomadicML Geovisualizer 🌍
+# NomadicML Geovisualizer
 
-A geospatial analysis tool built for **NomadicML**.
+NomadicML Geovisualizer is a small FastAPI + React/Leaflet app for exploring **NomadicML batch analysis events** on an interactive map.
 
-It transforms raw batch metadata into a map-ready, "Mini-Geoguessr" experience so you can inspect spatial context and jump straight into the right moment in video.
+It turns a batch into a “mini geoguessr”-style workflow: click an event marker, inspect its metadata, and jump straight into the relevant video timestamp.
 
-**Live Demo:** [https://nomadicml-geovis.onrender.com/](https://nomadicml-geovis.onrender.com/)
+Live demo (if deployed): https://nomadicml-geovis.onrender.com/
 
----
+## What You Get
 
-## 🚀 Key Features
+- Map-based browsing of event locations (points) + movement (paths)
+- Severity/status styling, basemap switching (light/dark/satellite)
+- Timeline playback to “scrub” through events over time
+- Heatmap mode for density exploration
+- Spatial filtering (draw a polygon/circle to filter events to a region)
+- AI text search across loaded events (SentenceTransformers embeddings)
+- Video previews inside marker popups (signed URL refresh when needed)
+- Mock mode (local CSV) for offline-ish UI testing
 
-* **Interactive Map:** Plots event start/end points and paths color-coded by severity.
-* **Instant Video Jumps:** Signed URLs deep-link the player to the exact timestamp.
-* **AI Search:** Embed events once per batch and fuzzy-search by text query.
-* **Custom Layers:** Toggle Light, Dark, and Satellite basemaps.
+## Repo Layout
 
----
+- `server.py`: FastAPI backend (API + serves `nomadic-client/dist` when present)
+- `requirements.txt`: Python dependencies
+- `nomadic-client/`: React + Vite frontend
+  - `nomadic-client/src/App.jsx`: main UI + data loading/search/filtering
+  - `nomadic-client/src/components/*`: map layer, heatmap, timeline, event grid
+- `nomadic_data_5_csv.csv`: mock dataset used when the UI is set to “Mock (CSV)”
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-* **Backend:** Python, FastAPI
-* **Geospatial:** Folium, Leaflet.js
-* **Frontend:** HTML5, TailwindCSS
-* **Embedding:** sentence-transformers (`all-MiniLM-L6-v2`)
-* **SDK:** NomadicML
+- Backend: Python, FastAPI, Uvicorn
+- NomadicML integration: `nomadicml` SDK + `NOMADIC_API_KEY`
+- AI search: `sentence-transformers` (`all-MiniLM-L6-v2`) + cosine similarity
+- Frontend: React + Vite, TailwindCSS
+- Mapping: Leaflet, react-leaflet, leaflet-draw, leaflet.heat
 
----
+## Prerequisites
 
-## ⚙️ Local Setup
+- Python 3.10+ (recommended)
+- Node.js 18+ (for `nomadic-client/`)
 
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/GauravUp28/nomadicml-geovis.git
-    cd nomadicml-geovis
-    ```
+## Configuration
 
-2.  **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
+- Backend:
+  - `NOMADIC_API_KEY`: required for `source="live"` (read from repo-root `.env`)
+  - `PORT`: optional (defaults to `8000`)
+- Frontend:
+  - `VITE_API_URL`: optional (defaults to `http://localhost:8000`); set in `nomadic-client/.env` for local dev
 
-3.  **Configure Environment**
-    Create a `.env` file in the root directory and add your API key:
-    ```env
-    NOMADIC_API_KEY=your_api_key_here
-    ```
+## Quick Start (Production-Style: One Server)
 
-4.  **Run the Server**
-    ```bash
-    python server.py
-    ```
+This is the simplest way to run locally: build the frontend once, then let FastAPI serve the static `dist/` bundle.
 
-5.  **Access the App**
-    Open your browser at `http://localhost:8000`
+1) Install backend dependencies
 
----
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
-## 📡 API Endpoints (local)
+2) Configure environment (live mode only)
 
-- `POST /api/visualize` — body `{ "batchId": "...", "filter": "all" | "<label fragment>" }` → GeoJSON FeatureCollection.
-- `POST /api/ai-search` — body `{ "batchId": "...", "query": "<text>" }` → `{ matching_ids: [...] }`.
-- `POST /api/video-url` — body `{ "videoId": "<id>" }` → `{ url: "<signed-url>" }`.
+Create `.env` at the repo root:
 
----
+```env
+NOMADIC_API_KEY=your_api_key_here
+```
 
-## 🧪 Test Data
+3) Build the frontend
 
-To test the visualization, use nomadicML Batch IDs containing GPS overlay data:
+```bash
+cd nomadic-client
+npm install
+npm run build
+cd ..
+```
 
-* `1a4feb58-093c-42b8-bc75-f0d1f4a2ab61`
+4) Run the server
 
-If you don’t have API access, switch the UI data source to **Mock (CSV)** to load `nomadic_data_5_csv.csv` locally (AI search still works after the data loads).
+```bash
+python server.py
+```
 
----
+Open: http://localhost:8000
 
-## 🔮 Roadmap & Future Improvements
+## Dev Workflow (Two Terminals: Vite + API)
 
-* **Filtering:** Add UI controls to filter events by Label (e.g., "Vehicle Stopping") or Severity.
-* **Playback Sync:** Implement bi-directional syncing to animate the map marker location in real-time as the video plays.
-* **Search History:** Cache recently used Batch IDs for quicker access.
+Use this if you want hot reload on the frontend.
 
----
+Terminal A (backend):
 
-## 🔗 Keep This Repo Separate (Recommended)
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+uvicorn server:app --reload --port 8000
+```
 
-If you want Geovis to live in its own GitHub repository but still be used inside the NomadicML codebase, treat it as a dependency rather than moving the code:
+Terminal B (frontend):
 
-1. **Git submodule (pin a commit/tag):**
-   - Add Geovis as a submodule inside NomadicML.
-   - Build `nomadic-client` during the NomadicML build/CI step and serve the generated `nomadic-client/dist`.
+```bash
+cd nomadic-client
+npm install
+npm run dev
+```
 
-2. **Git subtree (vendor but keep history):**
-   - Pull Geovis into NomadicML via subtree while keeping this repo as the upstream source of truth.
+The frontend reads the backend base URL from `nomadic-client/.env`:
 
-Either approach keeps this project clean and deployable on its own, without special deep-link or cross-repo fetch workarounds.
+```env
+VITE_API_URL=http://localhost:8000
+```
+
+Open the Vite dev URL printed in the terminal (usually http://localhost:5173).
+
+## Using The App
+
+1) Choose a data source:
+   - `Live`: loads from NomadicML using `batchId` + `NOMADIC_API_KEY`
+   - `Mock (CSV)`: loads from `nomadic_data_5_csv.csv` (no API key required)
+2) Click “Visualize” to load events.
+3) Optional: draw a polygon/circle on the map to filter to a region.
+4) Optional: use “AI Search” to filter events by natural language.
+5) Click markers or events in the log to jump the timeline and open video.
+
+## Backend API
+
+Base URL (local): `http://localhost:8000`
+
+### `POST /api/visualize`
+
+Loads a batch (live) or the CSV (mock) and returns a GeoJSON FeatureCollection.
+
+Request body:
+
+```json
+{
+  "batchId": "…",
+  "filter": "all",
+  "source": "live"
+}
+```
+
+Notes:
+
+- `source` is `"live"` or `"mock"`.
+- `filter` is `"all"` or a case-insensitive substring match (label/category/query in mock; passed through to the NomadicML SDK in live mode).
+- For `"live"` you must pass a real `batchId`.
+- For `"mock"` the backend reads `nomadic_data_5_csv.csv` and ignores NomadicML.
+- The server computes embeddings in a background task after returning data; AI search becomes available once embeddings finish.
+
+### `POST /api/ai-search`
+
+Returns IDs of events that match a text query using cosine similarity against precomputed embeddings.
+
+Request body:
+
+```json
+{ "batchId": "…", "query": "red car near intersection" }
+```
+
+Response:
+
+```json
+{ "matching_ids": ["…", "…"] }
+```
+
+Notes:
+
+- You must call `/api/visualize` first for the same `batchId` (that’s what populates the in-memory embedding cache).
+- Similarity threshold is currently hardcoded in `server.py` (search for `cos_scores > 0.50`).
+
+### `POST /api/video-url`
+
+Fetches a fresh signed URL for a NomadicML `videoId`.
+
+Request body:
+
+```json
+{ "videoId": "…" }
+```
+
+Response:
+
+```json
+{ "url": "https://…" }
+```
+
+## GeoJSON Schema (What The Frontend Expects)
+
+`/api/visualize` returns a `FeatureCollection` with a mix of:
+
+- `Point`: event start marker
+- `LineString`: optional movement path (start → end)
+
+Common `properties` fields used by the UI:
+
+- `id`: event identifier (string)
+- `label`: event label (string)
+- `severity`: `low | medium | high`
+- `status`: `approved | rejected | pending | invalid | unknown`
+- `timestamp`: event start time (ms since epoch)
+- `timestamp_end`: event end time (ms since epoch)
+- `time_str`: original `t_start` value (displayed)
+- `description`: AI analysis / description text
+- `video_id`: NomadicML video id (live mode)
+- `video_url`: signed URL (live mode, may be `null`)
+- `video_offset`: start offset in seconds (used for `#t=...` playback)
+- `share_link`: (mock mode) link back to NomadicML when no video is available
+- `type`: `"point"` or `"path"`
+
+## Mock Data
+
+Mock mode is designed for UI testing without NomadicML access:
+
+- Source: `nomadic_data_5_csv.csv`
+- Features are built from the “Frame Gps *” columns and timestamps in the CSV.
+- No video is embedded; the UI shows “Open in NomadicML” if a share link exists.
+
+## Caching & State
+
+- Signed video URLs are cached in-memory on the backend (`VIDEO_CACHE`).
+- Embeddings are cached in-memory per batch (`BATCH_EMBEDDINGS`, `BATCH_IDS`).
+- Restarting the server clears caches; you’ll need to re-run “Visualize”.
+
+## Troubleshooting
+
+- Model download stalls on first run: `sentence-transformers` downloads `all-MiniLM-L6-v2` the first time you start the backend (network required).
+- AI search says “Batch data not loaded”: run “Visualize” first (embeddings are computed after load).
+- `NOMADIC_API_KEY` missing: live mode requires `.env` with `NOMADIC_API_KEY=...` at repo root.
+- Video doesn’t load: signed URLs can expire; clicking the marker triggers `/api/video-url` refresh.
+
+## Deployment Notes
+
+- The backend serves `nomadic-client/dist` when it exists; most deployments build the frontend during CI and ship the built `dist/`.
+- Set `NOMADIC_API_KEY` in your hosting provider’s environment variables (don’t commit it).
+- Set `PORT` if your host requires it (e.g., Render/Heroku-style platforms).
+
+## Keeping This Repo Separate (Recommended)
+
+If you want Geovis to live in its own repository but still be used inside a larger codebase:
+
+- Git submodule: pin a commit/tag and build `nomadic-client` during CI; serve `nomadic-client/dist`.
+- Git subtree: vendor this repo into another repo while keeping upstream history.
