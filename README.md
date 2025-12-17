@@ -70,6 +70,8 @@ To test the visualization, use nomadicML Batch IDs containing GPS overlay data:
 
 * `1a4feb58-093c-42b8-bc75-f0d1f4a2ab61`
 
+If you don’t have API access, switch the UI data source to **Mock (CSV)** to load `nomadic_data_5_csv.csv` locally (AI search still works after the data loads).
+
 ---
 
 ## 🔮 Roadmap & Future Improvements
@@ -77,3 +79,18 @@ To test the visualization, use nomadicML Batch IDs containing GPS overlay data:
 * **Filtering:** Add UI controls to filter events by Label (e.g., "Vehicle Stopping") or Severity.
 * **Playback Sync:** Implement bi-directional syncing to animate the map marker location in real-time as the video plays.
 * **Search History:** Cache recently used Batch IDs for quicker access.
+
+---
+
+## 🔗 Keep This Repo Separate (Recommended)
+
+If you want Geovis to live in its own GitHub repository but still be used inside the NomadicML codebase, treat it as a dependency rather than moving the code:
+
+1. **Git submodule (pin a commit/tag):**
+   - Add Geovis as a submodule inside NomadicML.
+   - Build `nomadic-client` during the NomadicML build/CI step and serve the generated `nomadic-client/dist`.
+
+2. **Git subtree (vendor but keep history):**
+   - Pull Geovis into NomadicML via subtree while keeping this repo as the upstream source of truth.
+
+Either approach keeps this project clean and deployable on its own, without special deep-link or cross-repo fetch workarounds.

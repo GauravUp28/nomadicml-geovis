@@ -4,6 +4,7 @@ import requests
 import uuid
 import torch
 import pandas as pd
+from pathlib import Path
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -36,8 +37,9 @@ BATCH_IDS = {}
 BATCH_DATA = {} 
 
 class BatchRequest(BaseModel):
-    batchId: str
+    batchId: Optional[str] = ""
     filter: Optional[str] = "all"
+    source: Optional[str] = "live"  # "live" (NomadicML) | "mock" (local CSV)
 
 class VideoRequest(BaseModel):
     videoId: str
@@ -47,6 +49,8 @@ class SearchRequest(BaseModel):
     query: str
 
 VIDEO_CACHE = {}
+MOCK_CSV_PATH = Path(__file__).parent / "nomadic_data_5_csv.csv"
+MOCK_DF = None
 
 def get_signed_video_url(video_id: str, force_refresh: bool = False) -> str:
     if not force_refresh and video_id in VIDEO_CACHE: 
@@ -94,10 +98,108 @@ def compute_embeddings_task(batch_id, features):
     BATCH_IDS[batch_id] = [f['properties']['id'] for f in features]
     BATCH_DATA[batch_id] = { "features": features }
 
+def _get_mock_df() -> pd.DataFrame:
+    global MOCK_DF
+    if MOCK_DF is not None:
+        return MOCK_DF
+    if not MOCK_CSV_PATH.exists():
+        raise FileNotFoundError(f"Mock CSV not found at {MOCK_CSV_PATH}")
+    MOCK_DF = pd.read_csv(MOCK_CSV_PATH)
+    return MOCK_DF
+
+def _parse_mock_timestamp_range(value: str) -> tuple[int, int]:
+    if not value:
+        return 0, 0
+    parts = str(value).replace("-", "–").split("–", 1)
+    start_str = parts[0].strip()
+    end_str = parts[1].strip() if len(parts) > 1 else start_str
+    return timestamp_to_seconds(start_str), timestamp_to_seconds(end_str)
+
+def _mock_features(filter_text: Optional[str]) -> list[dict]:
+    df = _get_mock_df()
+    if filter_text and filter_text.lower() != "all":
+        needle = filter_text.lower()
+        mask = (
+            df["Label"].astype(str).str.lower().str.contains(needle, na=False)
+            | df["Category"].astype(str).str.lower().str.contains(needle, na=False)
+            | df["Query"].astype(str).str.lower().str.contains(needle, na=False)
+        )
+        df = df[mask]
+
+    features: list[dict] = []
+    for row in df.to_dict(orient="records"):
+        try:
+            lat_start = float(row.get("Frame Gps Lat Start"))
+            lon_start = float(row.get("Frame Gps Lon Start"))
+        except (TypeError, ValueError):
+            continue
+
+        try:
+            lat_end = float(row.get("Frame Gps Lat End"))
+            lon_end = float(row.get("Frame Gps Lon End"))
+        except (TypeError, ValueError):
+            lat_end, lon_end = lat_start, lon_start
+
+        ts_start = int(float(row.get("unix_timestamp_start", 0)) * 1000)
+        ts_end = int(float(row.get("unix_timestamp_end", 0)) * 1000) or ts_start
+        if ts_end < ts_start:
+            ts_end = ts_start
+
+        ts_range = row.get("Timestamp")
+        offset_start, _offset_end = _parse_mock_timestamp_range(ts_range)
+
+        props = {
+            "id": str(row.get("Analysis ID") or uuid.uuid4()),
+            "label": row.get("Label"),
+            "severity": str(row.get("Severity") or "low").lower(),
+            "status": row.get("Approval Status", "Unknown"),
+            "time_str": ts_range,
+            "timestamp": ts_start,
+            "timestamp_end": ts_end,
+            "description": f"{row.get('Query', '')} ({row.get('Category', '')})".strip(),
+            "category": row.get("Category"),
+            "video_id": None,
+            "video_url": None,
+            "video_offset": offset_start,
+            "is_moving": (lat_start != lat_end) or (lon_start != lon_end),
+            "share_link": row.get("Share Link"),
+        }
+
+        features.append({
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [lon_start, lat_start] },
+            "properties": {**props, "type": "point"}
+        })
+
+        if props["is_moving"]:
+            features.append({
+                "type": "Feature",
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": [[lon_start, lat_start], [lon_end, lat_end]]
+                },
+                "properties": {**props, "type": "path"}
+            })
+
+    return features
+
 @app.post("/api/visualize")
 async def get_geojson_data(request: BatchRequest, background_tasks: BackgroundTasks):
     try:
-        if not API_KEY: raise HTTPException(500, "API Key missing")
+        source = (request.source or "live").lower()
+        batch_id = request.batchId or ("mock" if source == "mock" else "")
+
+        if source == "mock":
+            features = _mock_features(request.filter)
+            if features:
+                background_tasks.add_task(compute_embeddings_task, batch_id, features)
+            return { "type": "FeatureCollection", "features": features }
+
+        if not request.batchId:
+            raise HTTPException(status_code=400, detail="batchId is required for live source")
+
+        if not API_KEY:
+            raise HTTPException(500, "API Key missing")
         client = NomadicML(api_key=API_KEY)
         
         # 1. Fetch Raw Data (Blocking I/O offloaded to thread)

@@ -136,16 +136,11 @@ const filterFeaturesBySpatialLayer = (features, layer) => {
 };
 
 function App() {
-  const initialParams = useMemo(() => new URLSearchParams(window.location.search), []);
+  const [dataSource, setDataSource] = useState('live'); // 'live' | 'mock'
+  const [liveBatchId, setLiveBatchId] = useState('');
 
-  const [batchId, setBatchId] = useState(() => initialParams.get('batchId') || '');
-  const [filter, setFilter] = useState('all');
-  const [geojsonUrlOverride, setGeojsonUrlOverride] = useState(() => initialParams.get('geojsonUrl'));
-  const [apiBaseOverride, setApiBaseOverride] = useState(() => {
-    const value = initialParams.get('apiBase');
-    return value ? value.replace(/\/$/, '') : null;
-  });
-  const [shareTokenOverride, setShareTokenOverride] = useState(() => initialParams.get('shareToken'));
+  const [batchId, setBatchId] = useState('');
+  const [filter, _setFilter] = useState('all');
   
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
@@ -181,6 +176,7 @@ function App() {
 
   const addToHistory = (id) => {
     if (!id) return;
+    if (id === 'mock') return;
     const newHistory = [id, ...recentBatches.filter(item => item !== id)].slice(0, 10);
     setRecentBatches(newHistory);
     localStorage.setItem('nomadic_batch_history', JSON.stringify(newHistory));
@@ -227,7 +223,7 @@ function App() {
 
 
   const handleVisualize = async () => {
-    if (!batchId) return alert("Please enter a Batch ID");
+    if (dataSource === 'live' && !batchId) return alert("Please enter a Batch ID");
     setLoading(true);
     setHasInteracted(false);
     setSelectedId(null);
@@ -235,19 +231,14 @@ function App() {
     setSpatialLayer(null); 
     setShapeVersion(0);
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const url = geojsonUrlOverride || `${API_URL}/api/visualize`;
-      const res = await fetch(
-        url,
-        geojsonUrlOverride
-          ? { method: 'GET' }
-          : {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ batchId, filter }),
-            }
-      );
+      const res = await fetch(`${API_URL}/api/visualize`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ batchId: dataSource === 'mock' ? 'mock' : batchId, filter, source: dataSource })
+      });
       if (!res.ok) throw new Error((await res.json()).detail);
       const geoJson = await res.json();
 
@@ -262,7 +253,7 @@ function App() {
         setCurrentTime(start);
         setData(geoJson);
         setFilteredData(geoJson);
-        addToHistory(batchId);
+        addToHistory(dataSource === 'mock' ? 'mock' : batchId);
       } else {
         alert("No events found.");
       }
@@ -273,14 +264,6 @@ function App() {
     }
   };
 
-  // Auto-load if we were provided a geojsonUrl (deep-link)
-  useEffect(() => {
-    if (geojsonUrlOverride && batchId) {
-      handleVisualize();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geojsonUrlOverride, batchId]);
-
   useEffect(() => {
     if (!searchQuery.trim()) {
         if (data) {
@@ -289,7 +272,7 @@ function App() {
         }
         return;
     }
-    /*
+
     const delaySearch = setTimeout(async () => {
         setIsSearching(true);
         try {
@@ -316,60 +299,6 @@ function App() {
             setIsSearching(false);
         }
     }, 1000);
-    */
-
-    const normalize = (value) =>
-      String(value || '')
-        .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, ' ')
-        .split(/\s+/)
-        .filter(Boolean);
-
-    const query = searchQuery.trim().toLowerCase();
-    const queryTokens = normalize(query);
-
-    const delaySearch = setTimeout(() => {
-      setIsSearching(true);
-      try {
-        const ids = new Set();
-        const ordered = [];
-
-        const featureList = (data?.features || []).filter(Boolean);
-        for (const feature of featureList) {
-          const props = feature?.properties || {};
-          const id = props.id;
-          if (!id || ids.has(id)) continue;
-
-          const combined = [
-            props.label,
-            props.description,
-            props.ai_analysis,
-            props.category,
-          ].filter(Boolean).join(' ');
-
-          const combinedLower = combined.toLowerCase();
-          const combinedTokens = new Set(normalize(combinedLower));
-
-          const phraseMatch = query.length > 0 && combinedLower.includes(query);
-          const tokenMatch = queryTokens.length > 0 && queryTokens.every((t) => combinedTokens.has(t));
-
-          if (phraseMatch || tokenMatch) {
-            ids.add(id);
-            ordered.push(id);
-          }
-        }
-
-        const matches = featureList.filter((f) => ids.has(f.properties?.id));
-        const spatiallyFiltered = filterFeaturesBySpatialLayer(matches, spatialLayer);
-
-        setSearchResults(ordered);
-        setFilteredData({ ...data, features: spatiallyFiltered });
-      } catch (err) {
-        console.error("Client-side search failed", err);
-      } finally {
-        setIsSearching(false);
-      }
-    }, 250);
     return () => clearTimeout(delaySearch);
   }, [searchQuery, data, batchId]);
 
@@ -457,27 +386,46 @@ function App() {
 
   return (
     <div className="flex flex-col h-screen bg-slate-100 overflow-hidden">
-      <div className="bg-white shadow-sm p-4 z-[2000] relative shrink-0">
-        <div className="max-w-full mx-4 flex flex-col md:flex-row justify-between items-center gap-4">
-          <h1 className="text-xl font-bold text-slate-800">NomadicML <span className="text-blue-600">Geovisualizer</span></h1>
-          
-          <div className="flex gap-2 w-full max-w-4xl items-center">
-            
-            <details className="relative">
-              <summary className="list-none bg-white border border-slate-300 text-slate-600 px-3 py-2 rounded-lg cursor-pointer hover:bg-slate-50 text-sm font-medium select-none transition-colors">🕒</summary>
-              <div className="absolute top-full left-0 mt-2 w-72 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden z-[5000]">
-                {recentBatches.map(id => (
-                  <button key={id} onClick={() => { setBatchId(id); document.querySelector('details[open]').removeAttribute('open'); }} className="w-full text-left px-4 py-2.5 text-xs font-mono text-slate-600 hover:bg-blue-50 hover:text-blue-700 truncate border-b border-slate-50 last:border-0">{id}</button>
-                ))}
-              </div>
-            </details>
+	      <div className="bg-white shadow-sm p-4 z-[2000] relative shrink-0">
+	        <div className="max-w-full mx-4 flex flex-col md:flex-row justify-between items-center gap-4">
+	          <h1 className="text-xl font-bold text-slate-800">NomadicML <span className="text-blue-600">Geovisualizer</span></h1>
+	          
+	          <div className="flex gap-2 w-full max-w-4xl items-center">
+              <select
+                value={dataSource}
+                onChange={(e) => {
+                  const nextSource = e.target.value;
+                  if (nextSource === 'mock') {
+                    if (batchId && batchId !== 'mock') setLiveBatchId(batchId);
+                    setBatchId('mock');
+                  } else if (nextSource === 'live') {
+                    setBatchId(liveBatchId || '');
+                  }
+                  setDataSource(nextSource);
+                }}
+                className="bg-white border border-slate-300 text-slate-600 px-3 py-2 rounded-lg text-sm font-medium"
+                title="Data source"
+              >
+                <option value="live">Live (Batch ID)</option>
+                <option value="mock">Mock (CSV)</option>
+              </select>
+	            
+	            <details className="relative">
+	              <summary className="list-none bg-white border border-slate-300 text-slate-600 px-3 py-2 rounded-lg cursor-pointer hover:bg-slate-50 text-sm font-medium select-none transition-colors">🕒</summary>
+		              <div className="absolute top-full left-0 mt-2 w-72 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden z-[5000]">
+		                {recentBatches.map(id => (
+	                  <button key={id} onClick={() => { setDataSource('live'); setBatchId(id); setLiveBatchId(id); document.querySelector('details[open]').removeAttribute('open'); }} className="w-full text-left px-4 py-2.5 text-xs font-mono text-slate-600 hover:bg-blue-50 hover:text-blue-700 truncate border-b border-slate-50 last:border-0">{id}</button>
+	                ))}
+	              </div>
+	            </details>
 
-            <input 
-              value={batchId} 
-              onChange={(e) => setBatchId(e.target.value)} 
-              className="w-32 border border-slate-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 font-mono" 
-              placeholder="Batch ID..." 
-            />
+	            <input 
+	              value={batchId} 
+	              onChange={(e) => { setBatchId(e.target.value); setLiveBatchId(e.target.value); }} 
+	              className="w-32 border border-slate-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 font-mono" 
+	              placeholder={dataSource === 'mock' ? 'mock' : 'Batch ID...'} 
+                disabled={dataSource === 'mock'}
+	            />
             
             {/* SEARCH BAR (Context Aware) */}
             <div className="flex-1 relative group">
@@ -553,20 +501,16 @@ function App() {
 	                {showHeatmap ? (
 	                  <HeatmapLayer data={heatmapData} />
 	                ) : (
-	                  <MapLayer
-	                    data={displayedData}
-	                    currentTime={currentTime}
-	                    showAll={!hasInteracted && !isPlaying}
-	                    selectedId={selectedId}
-	                    onMarkerClick={handleEventClick}
-	                    isPlaying={isPlaying}
-	                    apiBaseOverride={apiBaseOverride}
-	                    shareTokenOverride={shareTokenOverride}
-	                    batchId={batchId}
-	                  />
-	                )}
-	              </>
-	            )}
+		                  <MapLayer
+		                    data={displayedData}
+		                    currentTime={currentTime}
+		                    selectedId={selectedId}
+		                    onMarkerClick={handleEventClick}
+		                    isPlaying={isPlaying}
+		                  />
+		                )}
+		              </>
+		            )}
 
             {/* Disable auto-zoom if spatial filter is active (keeps user context) */}
             {displayedData && <AutoFitBounds data={displayedData} disableZoom={!!spatialLayer} />}
@@ -588,12 +532,11 @@ function App() {
         
         {displayedData && (
           <div className="w-[350px] shrink-0 h-full relative transition-all duration-300 ease-in-out border-l border-slate-200">
-            <EventGrid
-              events={eventList}
-              currentTime={currentTime}
-              selectedId={selectedId}
-              onEventClick={handleEventClick}
-            />
+	            <EventGrid
+	              events={eventList}
+	              selectedId={selectedId}
+	              onEventClick={handleEventClick}
+	            />
           </div>
         )}
       </div>

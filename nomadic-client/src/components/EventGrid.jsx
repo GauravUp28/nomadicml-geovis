@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { SEVERITY_COLORS, STATUS_COLORS, formatTime } from '../utils';
 
-const EventGrid = ({ events, currentTime, selectedId, onEventClick }) => {
+const EventGrid = ({ events, selectedId, onEventClick }) => {
   const scrollRefs = useRef({});
 
   const sortedEvents = [...events].sort((a, b) => 

@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CircleMarker, Popup, Polyline } from 'react-leaflet';
 import { SEVERITY_COLORS, STATUS_COLORS } from '../utils';
 
-const EventMarker = ({ feature, isSelected, onMarkerClick, apiBaseOverride, shareTokenOverride, batchId }) => {
+const EventMarker = ({ feature, isSelected, onMarkerClick }) => {
   const markerRef = useRef(null);
   const [videoUrl, setVideoUrl] = useState(null);
   const p = feature.properties;
+  const resolvedVideoUrl = videoUrl ?? (!p.video_id ? p.video_url : null);
   
   const position = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
   
@@ -23,23 +24,6 @@ const EventMarker = ({ feature, isSelected, onMarkerClick, apiBaseOverride, shar
     if (isSelected && !videoUrl && p.video_id) {
       const fetchVideo = async () => {
         try {
-          if (apiBaseOverride) {
-            const res = await fetch(`${apiBaseOverride}/public/video/${p.video_id}/signed-url`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                method: 'GET',
-                share_token: shareTokenOverride || null,
-                batch_id: batchId || null,
-              }),
-            });
-            if (res.ok) {
-              const data = await res.json();
-              setVideoUrl(data.url);
-            }
-            return;
-          }
-
           const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
           const res = await fetch(`${API_URL}/api/video-url`, {
             method: 'POST',
@@ -55,10 +39,8 @@ const EventMarker = ({ feature, isSelected, onMarkerClick, apiBaseOverride, shar
         }
       };
       fetchVideo();
-    } else if (isSelected && !videoUrl && !p.video_id && p.video_url) {
-      setVideoUrl(p.video_url);
     }
-  }, [isSelected, p.video_id, p.video_url, videoUrl, apiBaseOverride, shareTokenOverride, batchId]);
+  }, [isSelected, p.video_id, p.video_url, videoUrl]);
 
   return (
     <CircleMarker
@@ -88,19 +70,26 @@ const EventMarker = ({ feature, isSelected, onMarkerClick, apiBaseOverride, shar
           </div>
 
           <div className="bg-black rounded-lg overflow-hidden mb-3 border border-slate-200 min-h-[180px] flex items-center justify-center relative">
-            {videoUrl ? (
+            {resolvedVideoUrl ? (
               <video 
-                key={`${videoUrl}-${p.video_offset}`} 
+                key={`${resolvedVideoUrl}-${p.video_offset}`} 
                 width="100%" 
                 controls 
                 className="block"
                 preload="metadata"
               >
-                <source src={`${videoUrl}#t=${p.video_offset}`} type="video/mp4" />
+                <source src={`${resolvedVideoUrl}#t=${p.video_offset}`} type="video/mp4" />
                 Your browser does not support video.
               </video>
             ) : (
-               <div className="text-white text-xs">Loading Video...</div>
+               <div className="text-white text-xs text-center px-3">
+                 <div>No video available.</div>
+                 {p.share_link && (
+                   <a className="underline" href={p.share_link} target="_blank" rel="noreferrer">
+                     Open in NomadicML
+                   </a>
+                 )}
+               </div>
             )}
           </div>
 
@@ -116,7 +105,7 @@ const EventMarker = ({ feature, isSelected, onMarkerClick, apiBaseOverride, shar
   );
 };
 
-const MapLayer = ({ data, currentTime, showAll, selectedId, onMarkerClick, isPlaying, apiBaseOverride, shareTokenOverride, batchId }) => {
+const MapLayer = ({ data, currentTime, selectedId, onMarkerClick, isPlaying }) => {
   
   const visibleFeatures = data.features
     .filter(f => {
@@ -160,9 +149,6 @@ const MapLayer = ({ data, currentTime, showAll, selectedId, onMarkerClick, isPla
               feature={feature}
               isSelected={p.id === selectedId}
               onMarkerClick={onMarkerClick}
-              apiBaseOverride={apiBaseOverride}
-              shareTokenOverride={shareTokenOverride}
-              batchId={batchId}
             />
           );
         }
