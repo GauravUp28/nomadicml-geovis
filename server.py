@@ -2,7 +2,7 @@ import os
 import asyncio
 import requests
 import uuid
-import torch
+import numpy as np
 import pandas as pd
 from pathlib import Path
 from fastapi import FastAPI, HTTPException, BackgroundTasks
@@ -13,11 +13,17 @@ from nomadicml import NomadicML
 from dotenv import load_dotenv
 from typing import Optional
 from datetime import datetime, timedelta
-from sentence_transformers import SentenceTransformer, util
+from openai import OpenAI
 
 # --- Configuration ---
 load_dotenv()
 API_KEY = os.getenv("NOMADIC_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+if not OPENAI_API_KEY:
+    print("Warning: OPENAI_API_KEY is missing. AI features will fail.")
+
+openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 app = FastAPI()
 
@@ -29,9 +35,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-print("Loading AI Model...")
-model = SentenceTransformer('all-MiniLM-L6-v2') 
-
 BATCH_EMBEDDINGS = {}
 BATCH_IDS = {}
 BATCH_DATA = {} 
@@ -39,7 +42,7 @@ BATCH_DATA = {}
 class BatchRequest(BaseModel):
     batchId: Optional[str] = ""
     filter: Optional[str] = "all"
-    source: Optional[str] = "live"  # "live" (NomadicML) | "mock" (local CSV)
+    source: Optional[str] = "live"
 
 class VideoRequest(BaseModel):
     videoId: str
@@ -86,17 +89,60 @@ def convert_to_iso_time(time_str: str, default_duration_sec: int = 0) -> int:
     except:
         return 0
 
-# Helper task (Must be defined before use or globally accessible)
+# --- UPDATED: Batched & Sanitized Embedding Task ---
 def compute_embeddings_task(batch_id, features):
-    print(f"Background: Computing embeddings for batch {batch_id}...")
-    texts = [
-        f"{f['properties']['label']} {f['properties']['description']} {f['properties']['severity']}"
-        for f in features
-    ]
-    embeddings = model.encode(texts, convert_to_tensor=True)
-    BATCH_EMBEDDINGS[batch_id] = embeddings
-    BATCH_IDS[batch_id] = [f['properties']['id'] for f in features]
-    BATCH_DATA[batch_id] = { "features": features }
+    print(f"Background: Computing OpenAI embeddings for batch {batch_id}...")
+    try:
+        texts = []
+        # 1. Sanitize Inputs
+        for f in features:
+            props = f.get('properties', {})
+            
+            def clean(val):
+                s = str(val)
+                # Filter out Pandas NaNs or None strings
+                if s.lower() in ['none', 'nan', '']: return ""
+                return s
+
+            l = clean(props.get('label'))
+            d = clean(props.get('description'))
+            s = clean(props.get('severity'))
+            
+            text = f"{l} {d} {s}".strip()
+            if not text: text = "event" # Fallback to avoid empty string errors
+            texts.append(text)
+
+        if not texts:
+            return
+
+        # 2. Process in Batches (OpenAI limit is ~2048 items)
+        BATCH_SIZE = 500
+        all_embeddings = []
+        
+        for i in range(0, len(texts), BATCH_SIZE):
+            chunk = texts[i:i+BATCH_SIZE]
+            if not chunk: continue
+            
+            try:
+                res = openai_client.embeddings.create(
+                    input=chunk,
+                    model="text-embedding-3-small"
+                )
+                # Extract embeddings in order
+                all_embeddings.extend([d.embedding for d in res.data])
+            except Exception as e:
+                print(f"Error embedding chunk {i}: {e}")
+                # Append zeros to keep alignment if a chunk fails (rare)
+                all_embeddings.extend([[0.0]*1536] * len(chunk))
+
+        # 3. Cache Results
+        BATCH_EMBEDDINGS[batch_id] = np.array(all_embeddings)
+        BATCH_IDS[batch_id] = [f['properties']['id'] for f in features]
+        BATCH_DATA[batch_id] = { "features": features }
+        print(f"Embeddings cached for {batch_id}: {len(all_embeddings)} items.")
+        
+    except Exception as e:
+        print(f"Error computing embeddings: {e}")
 
 def _get_mock_df() -> pd.DataFrame:
     global MOCK_DF
@@ -127,8 +173,13 @@ def _mock_features(filter_text: Optional[str]) -> list[dict]:
         df = df[mask]
 
     features: list[dict] = []
-    for row in df.to_dict(orient="records"):
+    # Using fillna to avoid NaNs early
+    records = df.fillna("").to_dict(orient="records")
+    
+    for row in records:
         try:
+            # Handle empty strings for coords
+            if row.get("Frame Gps Lat Start") == "": continue
             lat_start = float(row.get("Frame Gps Lat Start"))
             lon_start = float(row.get("Frame Gps Lon Start"))
         except (TypeError, ValueError):
@@ -140,10 +191,14 @@ def _mock_features(filter_text: Optional[str]) -> list[dict]:
         except (TypeError, ValueError):
             lat_end, lon_end = lat_start, lon_start
 
-        ts_start = int(float(row.get("unix_timestamp_start", 0)) * 1000)
-        ts_end = int(float(row.get("unix_timestamp_end", 0)) * 1000) or ts_start
-        if ts_end < ts_start:
-            ts_end = ts_start
+        # Handle empty strings for timestamps
+        try:
+            ts_start = int(float(row.get("unix_timestamp_start", 0) or 0) * 1000)
+            ts_end = int(float(row.get("unix_timestamp_end", 0) or 0) * 1000) or ts_start
+        except ValueError:
+            ts_start, ts_end = 0, 0
+
+        if ts_end < ts_start: ts_end = ts_start
 
         ts_range = row.get("Timestamp")
         offset_start, _offset_end = _parse_mock_timestamp_range(ts_range)
@@ -202,7 +257,6 @@ async def get_geojson_data(request: BatchRequest, background_tasks: BackgroundTa
             raise HTTPException(500, "API Key missing")
         client = NomadicML(api_key=API_KEY)
         
-        # 1. Fetch Raw Data (Blocking I/O offloaded to thread)
         loop = asyncio.get_event_loop()
         print(f"Fetching batch {request.batchId}...")
         
@@ -217,20 +271,16 @@ async def get_geojson_data(request: BatchRequest, background_tasks: BackgroundTa
         features = []
         unique_video_ids = {r.get('video_id') for r in raw_data.get('results', []) if r.get('video_id')}
 
-        # 2. Parallel Fetch of Signed URLs
-        # We wrap the synchronous 'get_signed_video_url' in run_in_executor so it doesn't block
         async def fetch_url_safe(vid):
             url = await loop.run_in_executor(None, lambda: get_signed_video_url(vid))
             return vid, url
 
         if unique_video_ids:
-            # Run all fetches in parallel
             url_results = await asyncio.gather(*(fetch_url_safe(vid) for vid in unique_video_ids))
             url_cache = dict(url_results)
         else:
             url_cache = {}
 
-        # 3. Process Results (CPU work)
         for result in raw_data.get('results', []):
             vid_id = result.get('video_id')
             video_url = url_cache.get(vid_id)
@@ -285,7 +335,6 @@ async def get_geojson_data(request: BatchRequest, background_tasks: BackgroundTa
                         "properties": {**props, "type": "path"}
                     })
 
-        # 4. Offload Embeddings to Background Task
         if features:
             background_tasks.add_task(compute_embeddings_task, request.batchId, features)
 
@@ -301,15 +350,21 @@ async def ai_search(request: SearchRequest):
         if request.batchId not in BATCH_EMBEDDINGS:
             raise HTTPException(status_code=404, detail="Batch data not loaded.")
 
-        query_embedding = model.encode(request.query, convert_to_tensor=True)
-        cos_scores = util.cos_sim(query_embedding, BATCH_EMBEDDINGS[request.batchId])[0]
+        response = openai_client.embeddings.create(
+            input=[request.query],
+            model="text-embedding-3-small"
+        )
+        query_embedding = np.array(response.data[0].embedding)
         
-        top_results = torch.where(cos_scores > 0.50)[0]
+        batch_embeddings = BATCH_EMBEDDINGS[request.batchId]
+        cos_scores = np.dot(batch_embeddings, query_embedding)
+        
+        top_indices = np.where(cos_scores > 0.40)[0]
 
         matching_ids = []
         seen_ids = set()
 
-        for i in top_results.tolist():
+        for i in top_indices.tolist():
             vid = BATCH_IDS[request.batchId][i]
             if vid not in seen_ids:
                 matching_ids.append(vid)
