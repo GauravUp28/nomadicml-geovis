@@ -387,8 +387,18 @@ function App() {
   return (
     <div className="flex flex-col h-screen bg-slate-100 overflow-hidden">
 	      <div className="bg-white shadow-sm p-4 z-[2000] relative shrink-0">
-	        <div className="max-w-full mx-4 flex flex-col md:flex-row justify-between items-center gap-4">
-	          <h1 className="text-xl font-bold text-slate-800">NomadicML <span className="text-blue-600">Geovisualizer</span></h1>
+        <div className="max-w-full mx-4 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col items-start gap-1">
+            <h1 className="text-xl font-bold text-slate-800"><span className="text-blue-600">Geovisualizer</span></h1>
+            <a
+              href="https://github.com/GauravUp28/nomadicml-geovis"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-blue-600 hover:text-blue-700 underline"
+            >
+              GitHub Repo
+            </a>
+          </div>
 	          
 	          <div className="flex gap-2 w-full max-w-4xl items-center">
               <select
